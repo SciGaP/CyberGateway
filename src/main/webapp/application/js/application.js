@@ -2,9 +2,9 @@ var application = angular.module("application",["user","appServices","appControl
 
 application.config(['$routeProvider' ,function($routeProvider) {
     $routeProvider.
-        when('/', {controller:'JobListCtrl', templateUrl:'static/application/jobs.html'}).
-        when('/newJob', {controller:'NewJobCtrl', templateUrl:'static/application/newJob.html'}).
-        when('/job/:jobID/details', {controller:'JobController', templateUrl:'static/application/jobDetails.html'}).
+        when('/', {controller:'JobListCtrl', templateUrl:'application/jobs.html'}).
+        when('/newJob', {controller:'NewJobCtrl', templateUrl:'application/newJob.html'}).
+        when('/job/:jobID/details', {controller:'JobController', templateUrl:'application/jobDetails.html'}).
         otherwise({redirectTo:'/'});
 }]);
 
@@ -52,16 +52,16 @@ application.run(function($httpBackend) {
 
     // Do not bother server, return specified response status code, data and header
     //$httpBackend.whenGET('application/jobs/all').respond(200, jobs, {header: 'one'});
-    $httpBackend.whenGET('application/allJobs').passThrough();
+    $httpBackend.whenGET('app/allJobs').passThrough();
     // Do not bother server, return data. Status and header are automatically set!
     //$httpBackend.whenGET('application/jobs/j1').respond(jobj1);
     //$httpBackend.whenGET('application/jobs/j2').respond(jobj1);
 
-    $httpBackend.whenGET('application/jobs/j3/info').passThrough();
-    $httpBackend.whenGET('application/jobs/j5/info').passThrough();
-    $httpBackend.whenGET('application/jobs/j6/info').passThrough();
-    $httpBackend.whenGET('application/jobs/j7/info').passThrough();
-    $httpBackend.whenGET('application/jobs/j4/info').passThrough();
+    $httpBackend.whenGET('app/job/j3/').passThrough();
+    $httpBackend.whenGET('app/job/j5/').passThrough();
+    $httpBackend.whenGET('app/job/j6/').passThrough();
+    $httpBackend.whenGET('app/job/j7/').passThrough();
+    $httpBackend.whenGET('app/job/j4/').passThrough();
 
     $httpBackend.when('POST','application/uploadPDB/test').passThrough();
     $httpBackend.when('POST','application/createJob').passThrough();
@@ -73,12 +73,12 @@ application.run(function($httpBackend) {
 
     $httpBackend.whenGET('anotherURL').respond('Another content');
     // Do real request
-    $httpBackend.whenGET("static/application/topbars.html").passThrough();
-    $httpBackend.whenGET("static/application/footer.html").passThrough();
+    $httpBackend.whenGET("application/topbars.html").passThrough();
+    $httpBackend.whenGET("application/footer.html").passThrough();
     $httpBackend.whenGET("getUserinfo").passThrough();
-    $httpBackend.whenGET("static/application/jobs.html").passThrough();
-    $httpBackend.whenGET("static/application/jobDetails.html").passThrough();
-    $httpBackend.whenGET("static/application/newJob.html").passThrough();
+    $httpBackend.whenGET("application/jobs.html").passThrough();
+    $httpBackend.whenGET("application/jobDetails.html").passThrough();
+    $httpBackend.whenGET("application/newJob.html").passThrough();
 });
 // End For Dev Server
 /**
