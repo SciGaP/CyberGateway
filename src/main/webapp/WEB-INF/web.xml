@@ -17,14 +17,14 @@
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     <init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>org.scigap.vanillagateway</param-value>
+      <param-value>org.scigap.vanillagateway.services</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   
     <servlet-mapping>
         <servlet-name>Vanilla Gateway Service</servlet-name>
-        <url-pattern>/webresources/*</url-pattern>
+        <url-pattern>/application/*</url-pattern>
     </servlet-mapping>
     
     <!-- servlet-mapping>
