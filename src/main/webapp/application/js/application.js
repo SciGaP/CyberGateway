@@ -57,11 +57,11 @@ application.run(function($httpBackend) {
     //$httpBackend.whenGET('application/jobs/j1').respond(jobj1);
     //$httpBackend.whenGET('application/jobs/j2').respond(jobj1);
 
-    $httpBackend.whenGET('app/job/j3/').passThrough();
-    $httpBackend.whenGET('app/job/j5/').passThrough();
-    $httpBackend.whenGET('app/job/j6/').passThrough();
-    $httpBackend.whenGET('app/job/j7/').passThrough();
-    $httpBackend.whenGET('app/job/j4/').passThrough();
+    $httpBackend.whenGET('app/job/j3').passThrough();
+    $httpBackend.whenGET('app/job/j5').passThrough();
+    $httpBackend.whenGET('app/job/j6').passThrough();
+    $httpBackend.whenGET('app/job/j7').passThrough();
+    $httpBackend.whenGET('app/job/j4').passThrough();
 
     $httpBackend.when('POST','application/uploadPDB/test').passThrough();
     $httpBackend.when('POST','application/createJob').passThrough();

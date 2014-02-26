@@ -1,5 +1,7 @@
 package org.scigap.vanillagateway.services;
 
+import org.json.simple.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,23 +14,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jettison.json.JSONObject;
 
 @Path("/job")
 public class SingleJobDetailsHandler {
 
 	@GET
 	@Path("/{jobID}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String getDummyJob(@PathParam(value = "jobID") final String jobID) throws IOException {
-
-		Map<String, Object> job = new HashMap<String, Object>();
-		job.put("id", jobID);
-		job.put("name", "Airavata Tester");
-		job.put("resource", "Big Red II");
-		job.put("status", "Queued");
-		job.put("createdDate", "01_14_2014");
-
 		//todo : test if two input files contain the same name because Angular doesn't allow that.
 
 		List<String> inputs = new ArrayList<String>();
@@ -39,18 +32,21 @@ public class SingleJobDetailsHandler {
 		inputs.add("lastInput.java");
 
 		intermediateFiles.add("lastintermid.java");
-		intermediateFiles.add("lastIntermid.class");
+		intermediateFiles.add("test.class");
 
 		outputs.add("output1.java");
 		outputs.add("output2.csv");
 
+		JSONObject job_json = new JSONObject();
+        job_json.put("id", jobID);
+        job_json.put("name", "Airavata Tester");
+        job_json.put("resource", "Big Red II");
+        job_json.put("status", "Queued");
+        job_json.put("createdDate", "01_14_2014");
+        job_json.put("inputs", inputs);
+        job_json.put("intermediateFiles", intermediateFiles);
+        job_json.put("outputs", outputs);
 
-		job.put("inputs", inputs);
-		job.put("intermediateFiles", intermediateFiles);
-		job.put("outputs", outputs);
-
-		JSONObject job_json = new JSONObject(job);
-
-		return job_json.toString();
+        return job_json.toString();
 	}
 }
