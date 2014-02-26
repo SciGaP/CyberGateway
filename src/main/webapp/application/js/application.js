@@ -52,7 +52,7 @@ application.run(function($httpBackend) {
 
     // Do not bother server, return specified response status code, data and header
     //$httpBackend.whenGET('application/jobs/all').respond(200, jobs, {header: 'one'});
-    $httpBackend.whenGET('app/allJobs').passThrough();
+    $httpBackend.whenGET('app/alljobs').passThrough();
     // Do not bother server, return data. Status and header are automatically set!
     //$httpBackend.whenGET('application/jobs/j1').respond(jobj1);
     //$httpBackend.whenGET('application/jobs/j2').respond(jobj1);

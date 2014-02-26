@@ -4,10 +4,12 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
 
         var loadJobs = function () {
+        	console.log("inside the load jobs");
             JobService.getAllJobs().then(function (jobs) {
                 $scope.jobs = jobs;
                 console.log(jobs);
             });
+            console.log("exiting load jobs....");
         };
 
         loadJobs();
@@ -72,8 +74,9 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             JobService.fetchJob(jobID).then(function (job) {
                 $scope.job_details = job;
             });
+            console.log("Job details : " + $scope.job_details);
         };
-        console.log("Job details : " + $scope.job_details);
+        
 
 
         $scope.go = function ( path ) {

@@ -2,7 +2,7 @@ angular.module("appServices",[]).
 factory("JobService",["$http",function($http) {
 	return {
 		getAllJobs : function() {
-			return $http({method:"GET", url:"app/allJobs", cache:false}).
+			return $http({method:"GET", url:"app/alljobs", cache:false}).
 				then(function(response) {
 					return response.data;
 				},function(response,status) {
