@@ -15,7 +15,7 @@ public class NewJobHandler {
         this.name = name;
         this.description = description;
         formUploaded = true;
-        return "Form uploading complete";
+        return "Form uploading complete" + "name= "+name+" description= "+description;
     }
 
     @GET
