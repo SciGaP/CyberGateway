@@ -64,6 +64,15 @@
             <version>1.7.6</version>
         </dependency>
 
+        <!-- Testing dependency-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <!-- Maven auto generated dependencies for the archetype-->
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -74,12 +83,6 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>

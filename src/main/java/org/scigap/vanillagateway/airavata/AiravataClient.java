@@ -24,6 +24,14 @@ public class AiravataClient {
         this.client = AiravataClientFactory.createAiravataClient(thriftServerHost,thriftServerPort);
     }
 
+    public Airavata.Client getClient() {
+        return client;
+    }
+
+    public void setClient(Airavata.Client client) {
+        this.client = client;
+    }
+
     private void loadConfigurations() {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("airavata-client.properties");
 
