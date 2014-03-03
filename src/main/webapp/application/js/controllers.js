@@ -106,16 +106,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("In MainController");
     }]).
     controller("NewJobCtrl", ["$scope", "$routeParams","$http", function ($scope, $routeParams,$http) {
-        $scope.expName = '';
-
-        $scope.onItemClick = function (phaseID) {
-            $scope.selected = phaseID;
-            $scope.jobForm = "static/amber/new" + $scope.selected + "Job.html"
-        };
-        $scope.isCollapsed = false;
-
-        $scope.savedCPUCount = ""
-        $scope.savedScheduling = ""
 
         //save the advanced options
         $scope.saveAdvanceOptions = function(){
@@ -123,11 +113,10 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.savedScheduling = $scope.advScheduling;
         }
 
-
         //submitting the form
         var data = {
-            expName: "default",
-            expDescription: "default",
+            name: "default",
+            description: "default",
             input1: "default",
             input2: "default"
         };
@@ -139,10 +128,21 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         $scope.createJob = function() {
             $scope.saveData();
             console.log("posting data....");
-            $http.post('application/createJob', JSON.stringify(data)).success(function(){
-            console.log("form submission successful!!")
-            console.log(data)
-            });
+            $http({
+                method : 'POST',
+                url : 'app/newjob',
+                data : 'name=' + "experiment1" +'&description='+"testDescription",
+                headers : {
+                    'Content-Type' : 'application/x-www-form-urlencoded'
+                }
+            }).success(function (data, status, headers, config) {
+                    console.log("data posted");
+                    console.log(data);
+                })
+           // $http.post('app/newjob', JSON.stringify(data)).success(function(){
+           // console.log("form submission successful!!")
+           // console.log(data)
+           // });
         };
 
         console.log($scope.selected);
