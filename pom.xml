@@ -40,6 +40,7 @@
 
     <dependencies>
 
+        <!-- Airavata related dependencies-->
         <dependency>
             <groupId>org.apache.airavata</groupId>
             <artifactId>airavata-data-models</artifactId>
@@ -56,7 +57,14 @@
             <version>${airavata_version}</version>
         </dependency>
 
+        <!-- Logging dependencies-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.6</version>
+        </dependency>
 
+        <!-- Maven auto generated dependencies for the archetype-->
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
