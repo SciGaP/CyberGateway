@@ -7,6 +7,7 @@ import org.apache.airavata.api.error.ExperimentNotFoundException;
 import org.apache.airavata.api.error.InvalidRequestException;
 import org.apache.airavata.model.workspace.experiment.DataObjectType;
 import org.apache.airavata.model.workspace.experiment.Experiment;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeTest;
@@ -47,7 +48,7 @@ public class AiravataClientTester {
 
     @Test
     public void testClient(){
-        Experiment simple_experiment = createSimpleExperiment("project1","swithana","testExperiment","testing the vanilla gateway"
+        Experiment simple_experiment = createSimpleExperiment("project1","admin","testExperiment","testing the vanilla gateway"
                 ,"testapp1",new ArrayList<DataObjectType>());
         try {
             String exp_id = client.createExperiment(simple_experiment);
@@ -57,13 +58,15 @@ public class AiravataClientTester {
             logger.info("getExperiment result :"+resultingExperiment.getProjectID());
 
         } catch (InvalidRequestException e) {
-            e.printStackTrace();
+            logger.error("Error Occurred at client Testing", e.getMessage());
         } catch (AiravataClientException e) {
-            e.printStackTrace();
+            logger.error("Error Occurred at client Testing", e.getMessage());
         } catch (AiravataSystemException e) {
-            e.printStackTrace();
+            logger.error("Error Occurred at client Testing", e.getMessage());
         } catch (ExperimentNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Error Occurred at client Testing",e.getMessage());
+        }catch (TException e) {
+            logger.error("Error Occurred at client Testing", e.getMessage());
         }
     }
 }

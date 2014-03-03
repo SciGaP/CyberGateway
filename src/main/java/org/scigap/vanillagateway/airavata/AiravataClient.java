@@ -40,7 +40,7 @@ public class AiravataClient {
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error reading the client.properties file",e.getMessage());
         }
 
         this.thriftServerHost = properties.getProperty("airavata.server.url");
