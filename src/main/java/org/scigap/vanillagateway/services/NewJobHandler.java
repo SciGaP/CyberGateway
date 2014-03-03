@@ -18,11 +18,4 @@ public class NewJobHandler {
         return "Form uploading complete" + "name= "+name+" description= "+description;
     }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String isFormUploaded() {
-        String form= formUploaded ? "form Uploaded" : "form not uploaded";
-        return form + "name =" + this.name + " description = " + description;
-    }
-
 }

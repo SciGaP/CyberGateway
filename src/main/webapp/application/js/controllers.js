@@ -107,31 +107,22 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
     }]).
     controller("NewJobCtrl", ["$scope", "$routeParams","$http", function ($scope, $routeParams,$http) {
 
+        $scope.experiment={}
+
         //save the advanced options
         $scope.saveAdvanceOptions = function(){
             $scope.savedCPUCount = $scope.advCPUcount;
             $scope.savedScheduling = $scope.advScheduling;
         }
 
-        //submitting the form
-        var data = {
-            name: "default",
-            description: "default",
-            input1: "default",
-            input2: "default"
-        };
-
-        $scope.saveData = function(){
-            data = $scope.form;
-        };
-
         $scope.createJob = function() {
-            $scope.saveData();
             console.log("posting data....");
+            var data = $.param($scope.experiment);
+            console.log(data);
             $http({
                 method : 'POST',
                 url : 'app/newjob',
-                data : 'name=' + "experiment1" +'&description='+"testDescription",
+                data : data,
                 headers : {
                     'Content-Type' : 'application/x-www-form-urlencoded'
                 }
@@ -139,10 +130,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                     console.log("data posted");
                     console.log(data);
                 })
-           // $http.post('app/newjob', JSON.stringify(data)).success(function(){
-           // console.log("form submission successful!!")
-           // console.log(data)
-           // });
         };
 
         console.log($scope.selected);
