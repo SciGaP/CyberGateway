@@ -1,10 +1,10 @@
 angular.module("appControllers", ["appServices", "angularFileUpload"]).
-    controller("JobListCtrl", ["JobService", "$scope","$location", function (JobService, $scope,$location) {
+    controller("JobListCtrl", ["JobService", "$scope", "$location", function (JobService, $scope, $location) {
         console.log("In JobListCtrl");
 
 
         var loadJobs = function () {
-        	console.log("inside the load jobs");
+            console.log("inside the load jobs");
             JobService.getAllJobs().then(function (jobs) {
                 $scope.jobs = jobs;
                 console.log(jobs);
@@ -76,12 +76,11 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             });
             console.log("Job details : " + $scope.job_details);
         };
-        
 
 
-        $scope.go = function ( path ) {
-            $location.path( path );
-            console.log("path cloning going to: " +path);
+        $scope.go = function (path) {
+            $location.path(path);
+            console.log("path cloning going to: " + path);
         };
 
 
@@ -101,41 +100,70 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("Job details : " + $scope.job_details);
 
     }]).
-    controller("MainController", ["$scope", "$routeParams", function ($scope, $routeParams) {
-        $scope.appName = "WRF";
-        console.log("In MainController");
-    }]).
-    controller("NewJobCtrl", ["$scope", "$routeParams","$http", function ($scope, $routeParams,$http) {
+    controller("NewJobCtrl", ["$scope", "$routeParams", "$http", function ($scope, $routeParams, $http) {
 
-        $scope.experiment={}
+        $scope.experiment = {};
+        $scope.experiment.test = "";
 
         //save the advanced options
-        $scope.saveAdvanceOptions = function(){
+        $scope.saveAdvanceOptions = function () {
             $scope.savedCPUCount = $scope.advCPUcount;
             $scope.savedScheduling = $scope.advScheduling;
         }
 
-        $scope.createJob = function() {
+        $scope.createJob = function () {
             console.log("posting data....");
             var data = $.param($scope.experiment);
+            var files= $.param($scope.files);
             console.log(data);
             $http({
-                method : 'POST',
-                url : 'app/newjob',
-                data : data,
-                headers : {
-                    'Content-Type' : 'application/x-www-form-urlencoded'
-                }
+                method: 'POST',
+                url: 'app/newjob',
+                data: {data: data,files: $scope.files},
+                headers: {'Content-Type': 'multipart/form-data'}
+
             }).success(function (data, status, headers, config) {
                     console.log("data posted");
                     console.log(data);
                 })
         };
 
+
+        //an array of files selected
+        $scope.files = [];
+
+        //listen for the file selected event
+        $scope.$on("fileSelected", function (event, args) {
+            $scope.$apply(function () {
+                //add the file object to the scope's files collection
+                $scope.files.push(args.file);
+            });
+        });
+
+        $scope.deleteFile = function (index) {
+            $scope.files.splice(index,1);
+            console.log(index);
+        };
+
         console.log($scope.selected);
         console.log("In New Job Controller ...");
-    }]).
-    controller("FileUploadController", [ '$scope', '$upload', function ($scope, $upload) {
+
+    }]).directive('fileUpload',function () {
+        console.log("uploading file ...");
+        return {
+            scope: true,        //create a new scope
+            link: function (scope, el, attrs) {
+                el.bind('change', function (event) {
+                    var files = event.target.files;
+                    //iterate files since 'multiple' may be specified on the element
+                    for (var i = 0; i < files.length; i++) {
+                        //emit event upward
+                        scope.$emit("fileSelected", { file: files[i] });
+                    }
+                });
+            }
+        };
+    }).controller("FileUploadController", [ '$scope', '$upload', function ($scope, $upload) {
         $scope.onFileSelect = function ($files) {
             //$files: an array of files selected, each file has name, size, and type.
             for (var i = 0; i < $files.length; i++) {

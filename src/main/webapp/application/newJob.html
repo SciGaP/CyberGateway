@@ -21,7 +21,8 @@
 
                     <!-- configuring advanced options -->
                     <div>
-                        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Advanced Options >></button>
+                        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Advanced Options >>
+                        </button>
                         <hr>
                         <div ng-show="isCollapsed">
                             <div class="well well-lg">
@@ -40,7 +41,8 @@
                                 <div class="row-fluid">
                                     <div class="span3"></div>
                                     <div class="span9">
-                                        <button class="btn btn-default" ng-click="saveAdvanceOptions()"> Save</button>                                    </div>
+                                        <button class="btn btn-default" ng-click="saveAdvanceOptions()"> Save</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -48,28 +50,25 @@
 
                     <!-- input files -->
                     <div class="row-fluid">
-                        <div class="span3">Input file_1:</div>
+                        <div class="span3">Input files:</div>
                         <div class="span9">
-                            <input type="file" ng-model="form.input1"/>
+                            <input type="file" file-upload multiple/>
                         </div>
                     </div>
                     <br>
 
-                    <div class="row-fluid">
-                        <div class="span3">Input file_2:</div>
-                        <div class="span9">
-                            <input type="file" ng-model="form.input2"/>
-                        </div>
-                    </div>
-                    <br>
+                    <div class="row-fluid">'<ul>
+                        <li ng-repeat="file in files">
 
-                    <div class="row-fluid">
-                        <div class="span3">Input file_3:</div>
-                        <div class="span9">
-                            <input type="file" ng-model="form.input3"/>
+                        <div class="span3">{{file.name}}
+
                         </div>
+                        <div class="span9">
+                            <a href="" ><i class="icon-trash" ng-click="deleteFile($index)"></i></a>
+                        </div>
+                        </li>
+                    </ul>
                     </div>
-                    <br>
                     <br>
 
                     <div class="row-fluid">

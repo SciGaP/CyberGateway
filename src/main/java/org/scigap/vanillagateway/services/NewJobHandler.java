@@ -1,21 +1,21 @@
 package org.scigap.vanillagateway.services;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.util.Iterator;
+import java.util.List;
 
 @Path("/newjob")
 public class NewJobHandler {
-    private boolean formUploaded = false;
-    private String name="not initialized",description="not initialized";
+    private String name = "not initialized", description = "not initialized";
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String createJob(@FormParam("description") String description, @FormParam("name") String name) {
-        this.name = name;
-        this.description = description;
-        formUploaded = true;
-        return "Form uploading complete" + "name= "+name+" description= "+description;
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String createJob(@FormParam("name") String name,@FormParam("description") String description) {
+
+        return "Form uploading complete   " + "name= " + name + " description= " + description;
     }
 
 }
