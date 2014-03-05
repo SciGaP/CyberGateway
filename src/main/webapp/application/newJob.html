@@ -57,17 +57,14 @@
                     </div>
                     <br>
 
-                    <div class="row-fluid">'<ul>
-                        <li ng-repeat="file in files">
+                    <div class="row-fluid" ng-repeat="file in files">
 
                         <div class="span3">{{file.name}}
 
                         </div>
                         <div class="span9">
-                            <a href="" ><i class="icon-trash" ng-click="deleteFile($index)"></i></a>
+                            <a href=""><i class="icon-trash" ng-click="deleteFile($index)"></i></a>
                         </div>
-                        </li>
-                    </ul>
                     </div>
                     <br>
 
