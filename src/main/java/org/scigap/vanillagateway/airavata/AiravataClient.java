@@ -2,6 +2,11 @@ package org.scigap.vanillagateway.airavata;
 
 import org.apache.airavata.api.Airavata;
 import org.apache.airavata.api.client.AiravataClientFactory;
+import org.apache.airavata.api.error.AiravataClientException;
+import org.apache.airavata.api.error.AiravataSystemException;
+import org.apache.airavata.api.error.InvalidRequestException;
+import org.apache.airavata.model.workspace.experiment.Experiment;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +28,21 @@ public class AiravataClient {
         loadConfigurations();
         this.client = AiravataClientFactory.createAiravataClient(thriftServerHost,thriftServerPort);
     }
-
+    public String submitJob(Experiment experiment){
+        try {
+            String expID = client.createExperiment(experiment);
+            return expID;
+        } catch (InvalidRequestException e) {
+            logger.error("Error Creating the Experiment: "+e.getMessage());
+        } catch (AiravataClientException e) {
+            logger.error("Error Creating the Experiment: " + e.getMessage());
+        } catch (AiravataSystemException e) {
+            logger.error("Error Creating the Experiment: "+e.getMessage());
+        }catch (TException e) {
+            logger.error("Error Creating the Experiment: "+e.getMessage());
+        }
+        return null;
+    }
     public Airavata.Client getClient() {
         return client;
     }
