@@ -72,10 +72,16 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Multipart related -->
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-multipart</artifactId>
             <version>${jersey-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+            <version>3.0.4.Final</version>
         </dependency>
 
         <!-- Maven auto generated dependencies for the archetype-->

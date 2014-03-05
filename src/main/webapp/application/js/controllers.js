@@ -103,7 +103,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
     controller("NewJobCtrl", ["$scope", "$routeParams", "$http", function ($scope, $routeParams, $http) {
 
         $scope.experiment = {};
-        $scope.experiment.test = "";
 
         //save the advanced options
         $scope.saveAdvanceOptions = function () {
@@ -114,18 +113,23 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         $scope.createJob = function () {
             console.log("posting data....");
             var data = $.param($scope.experiment);
-            var files= $.param($scope.files);
+            var file = $scope.files[0];
             console.log(data);
-            $http({
-                method: 'POST',
-                url: 'app/newjob',
-                data: {data: data,files: $scope.files},
-                headers: {'Content-Type': 'multipart/form-data'}
 
-            }).success(function (data, status, headers, config) {
-                    console.log("data posted");
+            var exp = $scope.experiment;
+            var fd = new FormData();
+            fd.append('file', file);
+            fd.append('name', exp.name);
+            fd.append('description', exp.description);
+
+            $http.post('app/newjob', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                .success(function (data) {
+                    console.log("Form posted");
                     console.log(data);
-                })
+                });
         };
 
 
@@ -141,7 +145,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         });
 
         $scope.deleteFile = function (index) {
-            $scope.files.splice(index,1);
+            $scope.files.splice(index, 1);
             console.log(index);
         };
 
