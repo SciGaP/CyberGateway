@@ -72,7 +72,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Multipart related -->
+        <!--Multipart related dependencies-->
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-multipart</artifactId>
