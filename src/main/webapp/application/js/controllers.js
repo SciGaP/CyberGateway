@@ -110,26 +110,31 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.savedScheduling = $scope.advScheduling;
         }
 
-        $scope.createJob = function () {
-            console.log("posting data....");
-            var data = $.param($scope.experiment);
-            var file = $scope.files[0];
-            console.log(data);
+        $scope.createJob = function (isValid) {
+            // check to make sure the form is completely valid
+            if (isValid) {
 
-            var exp = $scope.experiment;
-            var fd = new FormData();
-            fd.append('file', file);
-            fd.append('name', exp.name);
-            fd.append('description', exp.description);
+                console.log("posting data....");
+                var data = $.param($scope.experiment);
+                var file = $scope.files[0];
+                console.log(data);
 
-            $http.post('app/newjob', fd, {
-                transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
-            })
-                .success(function (data) {
-                    console.log("Form posted");
-                    console.log(data);
-                });
+                var exp = $scope.experiment;
+                var fd = new FormData();
+                fd.append('file', file);
+                fd.append('name', exp.name);
+                fd.append('description', exp.description);
+
+                $http.post('app/newjob', fd, {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                })
+                    .success(function (data) {
+                        console.log("Form posted");
+                        console.log(data);
+                    });
+                alert('Job created Successfully!');
+            }
         };
 
 
