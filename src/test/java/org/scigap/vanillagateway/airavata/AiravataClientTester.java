@@ -54,6 +54,7 @@ public class AiravataClientTester {
             String exp_id = client.createExperiment(simple_experiment);
             logger.info("Created Experiment with the ID: "+exp_id);
 
+
             Experiment resultingExperiment = client.getExperiment(exp_id);
             logger.info("getExperiment result :"+resultingExperiment.getProjectID());
 

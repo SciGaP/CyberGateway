@@ -4,6 +4,7 @@ import org.apache.airavata.api.Airavata;
 import org.apache.airavata.api.client.AiravataClientFactory;
 import org.apache.airavata.api.error.AiravataClientException;
 import org.apache.airavata.api.error.AiravataSystemException;
+import org.apache.airavata.api.error.ExperimentNotFoundException;
 import org.apache.airavata.api.error.InvalidRequestException;
 import org.apache.airavata.model.workspace.experiment.Experiment;
 import org.apache.thrift.TException;
@@ -31,6 +32,8 @@ public class AiravataClient {
     public String submitJob(Experiment experiment){
         try {
             String expID = client.createExperiment(experiment);
+            launchExperiment(expID);
+
             return expID;
         } catch (InvalidRequestException e) {
             logger.error("Error Creating the Experiment: "+e.getMessage());
@@ -43,6 +46,29 @@ public class AiravataClient {
         }
         return null;
     }
+
+    private void launchExperiment (String expId)
+            throws TException{
+        try {
+            client.launchExperiment(expId, "testToken");
+        } catch (ExperimentNotFoundException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+            throw new ExperimentNotFoundException(e);
+        } catch (AiravataSystemException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+            throw new AiravataSystemException(e);
+        } catch (InvalidRequestException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+            throw new InvalidRequestException(e);
+        } catch (AiravataClientException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+            throw new AiravataClientException(e);
+        }catch (TException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+            throw new TException(e);
+        }
+    }
+
     public Airavata.Client getClient() {
         return client;
     }

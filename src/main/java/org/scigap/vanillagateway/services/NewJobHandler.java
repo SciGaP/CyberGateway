@@ -2,13 +2,16 @@ package org.scigap.vanillagateway.services;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import org.apache.airavata.model.workspace.experiment.ComputationalResourceScheduling;
 import org.apache.airavata.model.workspace.experiment.DataObjectType;
 import org.apache.airavata.model.workspace.experiment.Experiment;
+import org.apache.airavata.model.workspace.experiment.UserConfigurationData;
 import org.scigap.vanillagateway.airavata.AiravataClient;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/newjob")
@@ -24,7 +27,7 @@ public class NewJobHandler {
                             @FormDataParam("name") final String name,
                             @FormDataParam("description") final String description) {
 
-        Experiment experiment = createExperiment("test", "admin", name, description, "test", null);
+        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
         String experimentId = submitJob(experiment);
 
 
@@ -41,6 +44,8 @@ public class NewJobHandler {
         }
         return client.submitJob(experiment);
     }
+
+    // FIXME get the inputs and scheduling from the client
     private Experiment createExperiment(String projectID,
                                              String userName,
                                              String experimentName,
@@ -53,8 +58,60 @@ public class NewJobHandler {
         experiment.setName(experimentName);
         experiment.setDescription(expDescription);
         experiment.setApplicationId(applicationId);
-        experiment.setExperimentInputs(experimentInputList);
+
+
+        List<DataObjectType> exInputs = new ArrayList<DataObjectType>();
+        DataObjectType input = new DataObjectType();
+        input.setKey("echo_input");
+        //input.setType(DataType.STRING.toString());
+        input.setValue("echo_output=Hello World");
+        exInputs.add(input);
+
+        experiment.setExperimentInputs(exInputs);
+
+        List<DataObjectType> exOut = new ArrayList<DataObjectType>();
+        DataObjectType output = new DataObjectType();
+        output.setKey("echo_output");
+        //output.setType(DataType.STRING.toString());
+        output.setValue("");
+        exOut.add(output);
+
+        experiment.setExperimentOutputs(exOut);
+
+        ComputationalResourceScheduling scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 1, 1, 1,
+                "normal", 0, 0, 1, "sds128");
+        scheduling.setResourceHostId("gsissh-trestles");
+
+        UserConfigurationData userConfigurationData = new UserConfigurationData();
+        userConfigurationData.setAiravataAutoSchedule(false);
+        userConfigurationData.setOverrideManualScheduledParams(false);
+        userConfigurationData.setComputationalResourceScheduling(scheduling);
+
+        experiment.setUserConfigurationData(userConfigurationData);
+
         return experiment;
+    }
+    private ComputationalResourceScheduling createComputationResourceScheduling(String resourceHostId,
+                                                                                      int cpuCount,
+                                                                                      int nodeCount,
+                                                                                      int numberOfThreads,
+                                                                                      String queueName,
+                                                                                      int wallTimeLimit,
+                                                                                      long jobstartTime,
+                                                                                      int totalPhysicalMemory,
+                                                                                      String projectAccount) {
+
+        ComputationalResourceScheduling cmRS = new ComputationalResourceScheduling();
+        cmRS.setResourceHostId(resourceHostId);
+        cmRS.setTotalCPUCount(cpuCount);
+        cmRS.setNodeCount(nodeCount);
+        cmRS.setNumberOfThreads(numberOfThreads);
+        cmRS.setQueueName(queueName);
+        cmRS.setWallTimeLimit(wallTimeLimit);
+        cmRS.setJobStartTime((int) jobstartTime);
+        cmRS.setTotalPhysicalMemory(totalPhysicalMemory);
+        cmRS.setComputationalProjectAccount(projectAccount);
+        return cmRS;
     }
 
     // save uploaded file to new location
