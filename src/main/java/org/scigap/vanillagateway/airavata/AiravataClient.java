@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -25,10 +26,20 @@ public class AiravataClient {
     private String thriftServerHost;
     private int thriftServerPort;
 
-    public AiravataClient() {
+    private static AiravataClient instance = null;
+
+    protected AiravataClient() {
         loadConfigurations();
         this.client = AiravataClientFactory.createAiravataClient(thriftServerHost,thriftServerPort);
     }
+
+    public static AiravataClient getInstance(){
+        if(instance == null)
+            instance = new AiravataClient();
+
+        return instance;
+    }
+
     public String submitJob(Experiment experiment){
         try {
             String expID = client.createExperiment(experiment);
@@ -77,6 +88,21 @@ public class AiravataClient {
         this.client = client;
     }
 
+
+    public List<Experiment> getAllExperiments(String userName){
+        try {
+            return client.getAllUserExperiments(userName);
+        } catch (InvalidRequestException e) {
+            logger.error("Error occured while getting all the experiment...", e.getMessage());
+        } catch (AiravataClientException e) {
+            logger.error("Error occured while getting all the experiment...", e.getMessage());
+        } catch (AiravataSystemException e) {
+            logger.error("Error occured while getting all the experiment...", e.getMessage());
+        }catch (TException e) {
+            logger.error("Error occured while getting all the experiment...", e.getMessage());
+        }
+        return null;
+    }
     private void loadConfigurations() {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("airavata-client.properties");
 

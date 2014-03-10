@@ -2,6 +2,7 @@ package org.scigap.vanillagateway.services;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import org.apache.airavata.model.util.ExperimentModelUtil;
 import org.apache.airavata.model.workspace.experiment.ComputationalResourceScheduling;
 import org.apache.airavata.model.workspace.experiment.DataObjectType;
 import org.apache.airavata.model.workspace.experiment.Experiment;
@@ -27,7 +28,11 @@ public class NewJobHandler {
                             @FormDataParam("name") final String name,
                             @FormDataParam("description") final String description) {
 
-        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
+        // for trestles
+//        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
+
+        //for stampede
+        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho3", null);
         String experimentId = submitJob(experiment);
 
 
@@ -40,7 +45,7 @@ public class NewJobHandler {
     }
     private String submitJob(Experiment experiment){
         if(client == null){
-            client = new AiravataClient();
+            client = AiravataClient.getInstance();
         }
         return client.submitJob(experiment);
     }
@@ -78,9 +83,15 @@ public class NewJobHandler {
 
         experiment.setExperimentOutputs(exOut);
 
+/*
         ComputationalResourceScheduling scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 1, 1, 1,
                 "normal", 0, 0, 1, "sds128");
         scheduling.setResourceHostId("gsissh-trestles");
+*/
+        //for stampede
+        ComputationalResourceScheduling scheduling =
+                createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-STA110014S");
+        scheduling.setResourceHostId("stampede-host");
 
         UserConfigurationData userConfigurationData = new UserConfigurationData();
         userConfigurationData.setAiravataAutoSchedule(false);

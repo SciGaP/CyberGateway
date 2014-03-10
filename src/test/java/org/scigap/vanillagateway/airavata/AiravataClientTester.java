@@ -70,4 +70,23 @@ public class AiravataClientTester {
             logger.error("Error Occurred at client Testing", e.getMessage());
         }
     }
+    @Test
+    public void testGetExperiments(){
+
+        try {
+            List<Experiment> experiments = client.getAllUserExperiments("admin");
+            logger.info(experiments.toString());
+
+
+        } catch (InvalidRequestException e) {
+            logger.error("Error Occurred at client Testing", e.getMessage());
+        } catch (AiravataClientException e) {
+            logger.error("Error Occurred at client Testing", e.getMessage());
+        } catch (AiravataSystemException e) {
+            logger.error("Error Occurred at client Testing", e.getMessage());
+        }catch (TException e) {
+            logger.error("Error Occurred at client Testing", e.getMessage());
+        }
+    }
+
 }

@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.airavata.model.workspace.experiment.Experiment;
 import org.json.simple.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.scigap.vanillagateway.airavata.AiravataClient;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
@@ -16,10 +19,11 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/alljobs")
 public class AllJobDetailsHandler {
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllJobs() throws IOException {
+    private AiravataClient client;
+
+    /*@GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllJobs() throws IOException {
         Map<String, String> job3 = new HashMap<String, String>();
         job3.put("id", "j3");
         job3.put("name", "Job three");
@@ -80,6 +84,36 @@ public class AllJobDetailsHandler {
 
         return jsonArray.toString();
     }
+*/
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllExperiments() throws IOException {
+        if (client == null) {
+            client = AiravataClient.getInstance();
+        }
 
+        //fixme use the real username
+        List<Experiment> experiments = client.getAllExperiments("admin");
+        JSONObject job_json = null;
+        JSONArray jsonArray = new JSONArray();
+
+        Map<String, String> job = null;
+        for (Experiment experiment : experiments) {
+            job = new HashMap<String, String>();
+
+            job.put("id", experiment.getExperimentID());
+            job.put("name", experiment.getName());
+            //job.put("machine", "Mason");
+            //fixme get the real status
+            job.put("status", "test");
+            //job.put("lastRunTime", "01232014");
+            job.put("projectID", experiment.getProjectID());
+            job.put("description", experiment.getDescription());
+
+            job_json = new JSONObject(job);
+            jsonArray.add(job_json);
+        }
+        return jsonArray.toString();
+    }
 
 }
