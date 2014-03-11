@@ -134,6 +134,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 fd.append('file', file);
                 fd.append('name', exp.name);
                 fd.append('description', exp.description);
+                fd.append('application', exp.application);
 
                 $http.post('app/newjob', fd, {
                     transformRequest: angular.identity,
@@ -167,6 +168,21 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         console.log($scope.selected);
         console.log("In New Job Controller ...");
+
+
+
+        $scope.experiment.application = "SimpleEcho3";
+        $scope.applications = [
+            {name: "SimpleEcho3", id: 1},
+            {name: "SimpleEcho2", id: 1}
+        ];
+
+        $scope.onApplicationSelect = function (appname) {
+            $scope.experiment.application = appname;
+            console.log($scope.experiment.application);
+        };
+
+
 
     }]).directive('fileUpload',function () {
         console.log("uploading file ...");

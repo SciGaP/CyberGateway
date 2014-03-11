@@ -26,7 +26,25 @@
                         </div>
                     </div>
                     <br>
+                    <div class="row-fluid">
+                        <div class="span3">Application:</div>
+                        <div class="span9">
+                            <li class="dropdown">
 
+                                <a class="dropdown-toggle btn">
+                                    {{experiment.application}}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="app in applications">
+                                        <a ng-click="onApplicationSelect(app.name)">{{app.name}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div>
+
+                        <br>
+                        <br>
+                        <br>
                     <!-- configuring advanced options -->
                     <div>
                         <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Advanced Options >>
@@ -88,4 +106,7 @@
             </div>
         </div>
     </div>
+    <script>
+        $('.dropdown-toggle').dropdown()
+    </script>
 </div>

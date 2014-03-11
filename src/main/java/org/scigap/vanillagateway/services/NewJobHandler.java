@@ -26,6 +26,7 @@ public class NewJobHandler {
     public String createJob(@FormDataParam("file") InputStream uploadedInputStream,
                             @FormDataParam("file") FormDataContentDisposition fileDetail,
                             @FormDataParam("name") final String name,
+                            @FormDataParam("application") final String application,
                             @FormDataParam("description") final String description) {
 
         // for trestles
@@ -40,8 +41,9 @@ public class NewJobHandler {
        // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
         //saveToFile(uploadedInputStream, uploadedFileLocation);
 
-        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
-                "\nExperimentID = "+experimentId;
+        return application;
+//        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
+//                "\nExperimentID = "+experimentId;
     }
 
     private String submitJob(Experiment experiment){
