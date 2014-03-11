@@ -100,7 +100,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("Job details : " + $scope.job_details);
 
     }]).
-    controller("NewJobCtrl", ["$scope", "$routeParams", "$http", function ($scope, $routeParams, $http) {
+    controller("NewJobCtrl", ["$scope", "$routeParams", "$http","$location", function ($scope, $routeParams, $http,$location) {
 
         $scope.experiment = {};
 
@@ -134,6 +134,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                         console.log(data);
                     });
                 alert('Job created Successfully!');
+                $location.path('/');
             }
         };
 

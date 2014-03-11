@@ -83,7 +83,7 @@ public class SingleJobDetailsHandler {
         //job.put("lastStatusUpdate", convertTime(timeOfStateChange));
 
         List<DataObjectType> experimentInputs = experiment.getExperimentInputs();
-        
+
 
         return job.toString();
     }
