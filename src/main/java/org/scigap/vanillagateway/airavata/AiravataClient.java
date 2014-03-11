@@ -103,6 +103,23 @@ public class AiravataClient {
         }
         return null;
     }
+
+    public Experiment getExperiment(String experimentID) {
+        try {
+            return client.getExperiment(experimentID);
+        } catch (InvalidRequestException e) {
+            logger.error("Error occured while getting the experiment..."+ experimentID+"  ", e.getMessage());
+        } catch (ExperimentNotFoundException e) {
+            logger.error("Error occured while getting the experiment..."+ experimentID+"  ", e.getMessage());
+        } catch (AiravataClientException e) {
+            logger.error("Error occured while getting the experiment..."+ experimentID+"  ", e.getMessage());
+        } catch (AiravataSystemException e) {
+            logger.error("Error occured while getting the experiment..."+ experimentID+"  ", e.getMessage());
+        }catch (TException e) {
+            logger.error("Error occured while getting all the experiments...", e.getMessage());
+        }
+        return null;
+    }
     private void loadConfigurations() {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("airavata-client.properties");
 

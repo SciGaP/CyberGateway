@@ -72,9 +72,9 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         $scope.fetchSingleJob = function (jobID) {
             JobService.fetchJob(jobID).then(function (job) {
-                $scope.job_details = job;
+                $scope.item = job;
             });
-            console.log("Job details : " + $scope.job_details);
+            console.log("Job fetched : " + $scope.item);
         };
 
 
