@@ -43,7 +43,7 @@ public class AiravataClient {
     public String submitJob(Experiment experiment){
         try {
             String expID = client.createExperiment(experiment);
-            launchExperiment(expID);
+            //launchExperiment(expID);
 
             return expID;
         } catch (InvalidRequestException e) {
@@ -55,7 +55,8 @@ public class AiravataClient {
         }catch (TException e) {
             logger.error("Error Creating the Experiment: "+e.getMessage());
         }
-        return null;
+
+        return "exception occured in creating experiment";
     }
 
     private void launchExperiment (String expId)
@@ -93,13 +94,12 @@ public class AiravataClient {
         try {
             return client.getAllUserExperiments(userName);
         } catch (InvalidRequestException e) {
-            logger.error("Error occured while getting all the experiments...", e.getMessage());
-        } catch (AiravataClientException e) {
-            logger.error("Error occured while getting all the experiments...", e.getMessage());
+e.printStackTrace();        } catch (AiravataClientException e) {
+            e.printStackTrace();
         } catch (AiravataSystemException e) {
-            logger.error("Error occured while getting all the experiments...", e.getMessage());
+            e.printStackTrace();
         }catch (TException e) {
-            logger.error("Error occured while getting all the experiments...", e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -120,6 +120,24 @@ public class AiravataClient {
         }
         return null;
     }
+
+    public void cancelExperiment(String experimentID) {
+        //fixme log the exceptions
+        try {
+            client.terminateExperiment(experimentID);
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+        } catch (ExperimentNotFoundException e) {
+            e.printStackTrace();
+        } catch (AiravataClientException e) {
+            e.printStackTrace();
+        } catch (AiravataSystemException e) {
+            e.printStackTrace();
+        }catch (TException e) {
+            logger.error("Error occured while terminating the experiment...", e.getMessage());
+        }
+    }
+
     private void loadConfigurations() {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("airavata-client.properties");
 

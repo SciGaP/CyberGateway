@@ -116,14 +116,14 @@ public class AllJobDetailsHandler {
             //job.put("machine", "Mason");
             //fixme get the real status
 //            ExperimentStatus experimentStatus = experiment.getExperimentStatus();
-            //ExperimentState experimentState = experimentStatus.getExperimentState();
-            //long timeOfStateChange = experimentStatus.getTimeOfStateChange();
+//            ExperimentState experimentState = experimentStatus.getExperimentState();
+//            long timeOfStateChange = experimentStatus.getTimeOfStateChange();
 
-            //job.put("status", experimentState.toString());
+            job.put("status", experiment.getExperimentStatus().getExperimentState().toString());
             job.put("project", experiment.getProjectID());
             job.put("description", experiment.getDescription());
             job.put("submitDate", convertTime(experiment.getCreationTime()));
-            //job.put("lastStatusUpdate", convertTime(timeOfStateChange));
+            job.put("lastStatusUpdate", convertTime(experiment.getExperimentStatus().getTimeOfStateChange()));
 
             job_json = new JSONObject(job);
             jsonArray.add(job_json);

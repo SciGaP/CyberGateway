@@ -84,6 +84,16 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         };
 
 
+        //cancel the experiment
+        $scope.cancelExperiment = function (expID) {
+            JobService.cancelExperiment(expID).then(function (response) {
+                console.log("cancel experiment result: " + response);
+            });
+            $location.path('/');
+
+        };
+
+
     }]).
     controller("JobController", ["$scope", "$routeParams", "JobService", function ($scope, $routeParams, JobService) {
 

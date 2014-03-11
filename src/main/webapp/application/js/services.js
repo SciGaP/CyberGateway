@@ -21,6 +21,16 @@ factory("JobService",["$http",function($http) {
 					console.log(status);
 				});
 		},
+        cancelExperiment : function(expID) {
+            return $http({method:"GET", url:"app/cancel/"+expID, cache:false}).
+                then(function(response) {
+                    return response.data;
+                }, function(response, status) {
+                    console.log("Error canceling the job:  "+jobId);
+                    console.log(response);
+                    console.log(status);
+                });
+        },
         newJob : function(step,expName,files) {
             return $http({method:"GET", url:"application/newExperiment/", cache:false}).
                 then(function(response) {

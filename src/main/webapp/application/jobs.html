@@ -138,7 +138,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span4"><strong>Last status Update</strong></div>
-                        <div> {{item.statusUpdateTime}}</div>
+                        <div> {{item.lastStatusUpdate}}</div>
                     </div>
 
                     <!-- adding input files -->
@@ -174,7 +174,7 @@
                             </button>
                         </div>
                         <div class="span4">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel Job</button>
+                            <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="cancelExperiment(item.id)">Cancel Job</button>
                         </div>
                     </div>
 

@@ -37,12 +37,13 @@ public class NewJobHandler {
 
 
         //downloading the files to the server
-        String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
-        saveToFile(uploadedInputStream, uploadedFileLocation);
+       // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
+        //saveToFile(uploadedInputStream, uploadedFileLocation);
 
         return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
                 "\nExperimentID = "+experimentId;
     }
+
     private String submitJob(Experiment experiment){
         if(client == null){
             client = AiravataClient.getInstance();
@@ -90,14 +91,12 @@ public class NewJobHandler {
 */
         //for stampede
         ComputationalResourceScheduling scheduling =
-                createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-STA110014S");
+                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-STA110014S");
         scheduling.setResourceHostId("stampede-host");
-
         UserConfigurationData userConfigurationData = new UserConfigurationData();
         userConfigurationData.setAiravataAutoSchedule(false);
         userConfigurationData.setOverrideManualScheduledParams(false);
         userConfigurationData.setComputationalResourceScheduling(scheduling);
-
         experiment.setUserConfigurationData(userConfigurationData);
 
         return experiment;

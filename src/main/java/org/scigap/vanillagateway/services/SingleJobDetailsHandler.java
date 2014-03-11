@@ -69,18 +69,17 @@ public class SingleJobDetailsHandler {
         JSONObject job = new JSONObject();
         job.put("id", experiment.getExperimentID());
         job.put("name", experiment.getName());
-
         //job.put("machine", "Mason");
         //fixme get the real status
 //            ExperimentStatus experimentStatus = experiment.getExperimentStatus();
-        //ExperimentState experimentState = experimentStatus.getExperimentState();
-        //long timeOfStateChange = experimentStatus.getTimeOfStateChange();
+//            ExperimentState experimentState = experimentStatus.getExperimentState();
+//            long timeOfStateChange = experimentStatus.getTimeOfStateChange();
 
-        //job.put("status", experimentState.toString());
+        job.put("status", experiment.getExperimentStatus().getExperimentState().toString());
         job.put("project", experiment.getProjectID());
         job.put("description", experiment.getDescription());
         job.put("submitDate", convertTime(experiment.getCreationTime()));
-        //job.put("lastStatusUpdate", convertTime(timeOfStateChange));
+        job.put("lastStatusUpdate", convertTime(experiment.getExperimentStatus().getTimeOfStateChange()));
 
         List<DataObjectType> experimentInputs = experiment.getExperimentInputs();
 
