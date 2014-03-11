@@ -93,13 +93,13 @@ public class AiravataClient {
         try {
             return client.getAllUserExperiments(userName);
         } catch (InvalidRequestException e) {
-            logger.error("Error occured while getting all the experiment...", e.getMessage());
+            logger.error("Error occured while getting all the experiments...", e.getMessage());
         } catch (AiravataClientException e) {
-            logger.error("Error occured while getting all the experiment...", e.getMessage());
+            logger.error("Error occured while getting all the experiments...", e.getMessage());
         } catch (AiravataSystemException e) {
-            logger.error("Error occured while getting all the experiment...", e.getMessage());
+            logger.error("Error occured while getting all the experiments...", e.getMessage());
         }catch (TException e) {
-            logger.error("Error occured while getting all the experiment...", e.getMessage());
+            logger.error("Error occured while getting all the experiments...", e.getMessage());
         }
         return null;
     }

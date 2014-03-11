@@ -2,12 +2,13 @@ package org.scigap.vanillagateway.services;
 
 import javax.ws.rs.Path;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import org.apache.airavata.model.workspace.experiment.Experiment;
+import org.apache.airavata.model.workspace.experiment.ExperimentState;
+import org.apache.airavata.model.workspace.experiment.ExperimentStatus;
 import org.json.simple.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.scigap.vanillagateway.airavata.AiravataClient;
@@ -87,17 +88,25 @@ public class AllJobDetailsHandler {
 */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllExperiments() throws IOException {
+    public String getAllExperiments() {
         if (client == null) {
             client = AiravataClient.getInstance();
         }
 
         //fixme use the real username
         List<Experiment> experiments = client.getAllExperiments("admin");
+
         JSONObject job_json = null;
         JSONArray jsonArray = new JSONArray();
 
         Map<String, String> job = null;
+        if(experiments == null){
+            job.put("id", "No Experiments yet");
+            job_json = new JSONObject(job);
+            jsonArray.add(job_json);
+            return jsonArray.toString();
+        }
+
         for (Experiment experiment : experiments) {
             job = new HashMap<String, String>();
 
@@ -105,15 +114,27 @@ public class AllJobDetailsHandler {
             job.put("name", experiment.getName());
             //job.put("machine", "Mason");
             //fixme get the real status
-            job.put("status", "test");
-            //job.put("lastRunTime", "01232014");
-            job.put("projectID", experiment.getProjectID());
+//            ExperimentStatus experimentStatus = experiment.getExperimentStatus();
+            //ExperimentState experimentState = experimentStatus.getExperimentState();
+            //long timeOfStateChange = experimentStatus.getTimeOfStateChange();
+
+            //job.put("status", experimentState.toString());
+            job.put("project", experiment.getProjectID());
             job.put("description", experiment.getDescription());
+            job.put("submitDate", convertTime(experiment.getCreationTime()));
+            //job.put("lastStatusUpdate", convertTime(timeOfStateChange));
 
             job_json = new JSONObject(job);
             jsonArray.add(job_json);
         }
+
         return jsonArray.toString();
+    }
+
+    private String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        return format.format(date).toString();
     }
 
 }

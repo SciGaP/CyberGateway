@@ -3,14 +3,7 @@
         <div class="well-iu span12">
             <div class="well-heading"> Job Details</div>
             <div>
-                <div class="row-fluid">
-                    <div class="span3">Search Jobs:</div>
-                    <div class="span9">
-                        <input type="text" ng-model="filter.expName">
-                    </div>
-                </div>
-                <br>
-
+               
                 <div class="row-fluid">
                     <div class="span3">
                         <li class="dropdown">
@@ -109,7 +102,7 @@
                             <td>{{job.status}}</td>
                             <td>{{job.project}}</td>
                             <td>{{job.submitDate | date:'medium'}}</td>
-                            <td>{{job.runtime}}</td>
+                            <td>{{job.lastStatusUpdate}}</td>
                         </tr>
                         </tbody>
                     </table>
