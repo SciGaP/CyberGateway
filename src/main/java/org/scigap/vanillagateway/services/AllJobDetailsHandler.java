@@ -102,7 +102,7 @@ public class AllJobDetailsHandler {
         Map<String, String> job = null;
         if(experiments == null){
             job = new HashMap<String, String>();
-            job.put("id", "No Experiments yet");
+            job.put("name", "No Experiments yet");
             job_json = new JSONObject(job);
             jsonArray.add(job_json);
             return jsonArray.toString();

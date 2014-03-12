@@ -25,8 +25,8 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         $scope.selectedProject = "AllExperiments";
         $scope.projects = [
             {name: "AllExperiments", id: 1},
-            {name: "Protein", id: 2},
-            {name: "Cybergateway", id: 3}
+            {name: "vanillagateway", id: 2}
+
         ];
         $scope.project = "";
 

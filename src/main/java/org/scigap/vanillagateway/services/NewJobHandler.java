@@ -93,7 +93,7 @@ public class NewJobHandler {
 */
         //for stampede
         ComputationalResourceScheduling scheduling =
-                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "development", 0, 0, 1, "TG-MCB070039N");
+                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
         scheduling.setResourceHostId("gsissh-stampede");
         UserConfigurationData userConfigurationData = new UserConfigurationData();
         userConfigurationData.setAiravataAutoSchedule(false);
