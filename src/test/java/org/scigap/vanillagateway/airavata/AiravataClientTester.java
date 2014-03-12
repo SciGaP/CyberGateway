@@ -82,6 +82,10 @@ public class AiravataClientTester {
 
         List<Experiment> experiments = airavataClient.getAllExperiments("admin");
         Thread.sleep(4000);
+
+        for (Experiment experiment : experiments) {
+            System.out.println(experiment.getExperimentID()+ "\t"+experiment.getName() );
+        }
         logger.info(experiments.get(0).getExperimentID());
 
     }
