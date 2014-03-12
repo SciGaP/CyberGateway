@@ -41,6 +41,16 @@ factory("JobService",["$http",function($http) {
                     console.log(status);
                 });
         },
+        getAllApplications : function() {
+            return $http({method:"GET", url:"app/applications/", cache:false}).
+                then(function(response) {
+                    return response.data;
+                }, function(response, status) {
+                    console.log("Error fetching job detail for Job Id "+jobId);
+                    console.log(response);
+                    console.log(status);
+                });
+        },
         uploadFile: function (file,jobID, callback) {
             $http.uploadFile({
                 url: "application/uploadPDB/"+jobID,

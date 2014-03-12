@@ -33,11 +33,9 @@ public class AiravataClient {
         this.client = AiravataClientFactory.createAiravataClient(thriftServerHost,thriftServerPort);
     }
 
-    public static AiravataClient getInstance(){
-        if(instance == null)
-            instance = new AiravataClient();
+    public static AiravataClient getInstance() {
 
-        return instance;
+        return new AiravataClient();
     }
 
     public String submitJob(Experiment experiment){
@@ -47,13 +45,12 @@ public class AiravataClient {
 
             return expID;
         } catch (InvalidRequestException e) {
-            logger.error("Error Creating the Experiment: "+e.getMessage());
-        } catch (AiravataClientException e) {
-            logger.error("Error Creating the Experiment: " + e.getMessage());
+e.printStackTrace();        } catch (AiravataClientException e) {
+            e.printStackTrace();
         } catch (AiravataSystemException e) {
-            logger.error("Error Creating the Experiment: "+e.getMessage());
+            e.printStackTrace();
         }catch (TException e) {
-            logger.error("Error Creating the Experiment: "+e.getMessage());
+            e.printStackTrace();
         }
 
         return "exception occured in creating experiment";

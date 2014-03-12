@@ -41,9 +41,9 @@ public class NewJobHandler {
        // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
         //saveToFile(uploadedInputStream, uploadedFileLocation);
 
-        return application;
-//        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
-//                "\nExperimentID = "+experimentId;
+//        return application;
+        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
+                "\nExperimentID = "+experimentId;
     }
 
     private String submitJob(Experiment experiment){

@@ -33,7 +33,7 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
-                    <jvmArgs>-XX:PermSize=1024M -XX:MaxPermSize=1024M
+                    <jvmArgs>-XX:PermSize=1024M -XX:MaxPermSize=1024M -Xms=2048 -Xmx=2048
                     </jvmArgs>
                 </configuration>
             </plugin>

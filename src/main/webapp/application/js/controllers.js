@@ -110,7 +110,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("Job details : " + $scope.job_details);
 
     }]).
-    controller("NewJobCtrl", ["$scope", "$routeParams", "$http","$location", function ($scope, $routeParams, $http,$location) {
+    controller("NewJobCtrl", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
 
         $scope.experiment = {};
 
@@ -170,18 +170,23 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("In New Job Controller ...");
 
 
-
         $scope.experiment.application = "SimpleEcho3";
-        $scope.applications = [
-            {name: "SimpleEcho3", id: 1},
-            {name: "SimpleEcho2", id: 1}
-        ];
+
+
+        $scope.getAllApplications = function () {
+            JobService.getAllApplications().then(function (response) {
+                console.log("applications experiment result: " + response);
+                $scope.applications = response;
+            });
+
+        };
+
+        $scope.getAllApplications();
 
         $scope.onApplicationSelect = function (appname) {
             $scope.experiment.application = appname;
             console.log($scope.experiment.application);
         };
-
 
 
     }]).directive('fileUpload',function () {
