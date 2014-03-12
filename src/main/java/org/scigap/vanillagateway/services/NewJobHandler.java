@@ -33,7 +33,7 @@ public class NewJobHandler {
 //        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
 
         //for stampede
-        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho3", null);
+        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "US3EchoStampede", null);
         String experimentId = submitJob(experiment);
 
 
@@ -93,8 +93,8 @@ public class NewJobHandler {
 */
         //for stampede
         ComputationalResourceScheduling scheduling =
-                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-STA110014S");
-        scheduling.setResourceHostId("stampede-host");
+                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "development", 0, 0, 1, "TG-MCB070039N");
+        scheduling.setResourceHostId("gsissh-stampede");
         UserConfigurationData userConfigurationData = new UserConfigurationData();
         userConfigurationData.setAiravataAutoSchedule(false);
         userConfigurationData.setOverrideManualScheduledParams(false);

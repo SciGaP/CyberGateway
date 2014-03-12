@@ -7,13 +7,16 @@ import org.apache.airavata.api.error.AiravataSystemException;
 import org.apache.airavata.api.error.ExperimentNotFoundException;
 import org.apache.airavata.api.error.InvalidRequestException;
 import org.apache.airavata.model.workspace.experiment.Experiment;
+import org.apache.airavata.model.workspace.experiment.JobStatus;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -41,7 +44,7 @@ public class AiravataClient {
     public String submitJob(Experiment experiment){
         try {
             String expID = client.createExperiment(experiment);
-            //launchExperiment(expID);
+            launchExperiment(expID);
 
             return expID;
         } catch (InvalidRequestException e) {
@@ -60,6 +63,7 @@ e.printStackTrace();        } catch (AiravataClientException e) {
             throws TException{
         try {
             client.launchExperiment(expId, "testToken");
+
         } catch (ExperimentNotFoundException e) {
             logger.error("Error occured while launching the experiment...", e.getMessage());
             throw new ExperimentNotFoundException(e);
@@ -78,6 +82,24 @@ e.printStackTrace();        } catch (AiravataClientException e) {
         }
     }
 
+    public Map<String, JobStatus> getJobStatuses(String expId)
+            {
+        try {
+            return client.getJobStatuses(expId);
+
+        } catch (ExperimentNotFoundException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+        } catch (AiravataSystemException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+        } catch (InvalidRequestException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+        } catch (AiravataClientException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+        }catch (TException e) {
+            logger.error("Error occured while launching the experiment...", e.getMessage());
+        }
+            return null;
+    }
     public Airavata.Client getClient() {
         return client;
     }
