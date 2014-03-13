@@ -93,4 +93,36 @@ public class ApplicationHandler {
 //		}
 //		return jsonArray.toString();
 	}
+	
+	@Path("/{applicationId}/deployments")
+	@GET
+	@Produces("text/html")
+	public String getDeployments(@PathParam("applicationId") String applicationId) {
+		if (applicationId.equals("echo-app")){
+			return "[{\"name\":\"trestles\"}]";
+		} else if (applicationId.equals("ls-app")){
+			return "[{\"name\":\"stampede\"},{\"name\":\"bigred\"}]";
+		} else if (applicationId.equals("us3-app")){
+			return "[{\"name\":\"trestles\"},{\"name\":\"stampede\"}]";
+		}
+		return "[]";
+//		JSONArray jsonArray = new JSONArray();
+//		JSONObject application = null;
+//		try {
+//			AiravataAPI api = getAPI();
+//			ServiceDescription serviceDescription = api.getApplicationManager()
+//					.getServiceDescription(applicationId);
+//			InputParameterType[] inputs = serviceDescription.getType()
+//					.getInputParametersArray();
+//			for (InputParameterType inputParameterType : inputs) {
+//				application = new JSONObject();
+//				application.put("name", inputParameterType.getParameterName());
+//				application.put("type", inputParameterType.getParameterType());
+//				jsonArray.add(application);
+//			}
+//		} catch (AiravataAPIInvocationException e) {
+//			e.printStackTrace();
+//		}
+//		return jsonArray.toString();
+	}
 }
