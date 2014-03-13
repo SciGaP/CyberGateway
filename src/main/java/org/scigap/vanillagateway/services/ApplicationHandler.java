@@ -45,13 +45,16 @@ public class ApplicationHandler {
 //			e.printStackTrace();
 //		}
 		application=new JSONObject();
-		application.put("name", "echo-app");
+		application.put("name", "UltrascanAppTrestles");
 		jsonArray.add(application);
 		application=new JSONObject();
-		application.put("name", "us3-app");
+		application.put("name", "UltrascanAppStampede");
 		jsonArray.add(application);
 		application=new JSONObject();
-		application.put("name", "ls-app");
+		application.put("name", "SimpleEcho2");
+		jsonArray.add(application);
+		application=new JSONObject();
+		application.put("name", "SimpleEcho3");
 		jsonArray.add(application);
 		return jsonArray.toString();
 	}
@@ -60,12 +63,14 @@ public class ApplicationHandler {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getInputs(@PathParam("applicationId") String applicationId) {
-		if (applicationId.equals("echo-app")){
+		if (applicationId.equals("UltrascanAppTrestles")){
+			return "[{\"name\":\"input\",\"type\": \"URI\" }]";
+		} else if (applicationId.equals("UltrascanAppStampede")){
+			return "[{\"name\":\"input\",\"type\": \"URI\" }]";
+		} else if (applicationId.equals("SimpleEcho2")){
 			return "[{\"name\":\"echo_input\",\"type\": \"String\" }]";
-		} else if (applicationId.equals("ls-app")){
-			return "[{\"name\":\"path\",\"type\": \"String\" },{\"name\":\"options\",\"type\": \"String\" }]";
-		} else if (applicationId.equals("us3-app")){
-			return "[{\"name\":\"dataset\",\"type\": \"File\" }]";
+		} else if (applicationId.equals("SimpleEcho3")){
+			return "[{\"name\":\"echo_input\",\"type\": \"String\" }]";
 		}
 		return "[]";
 //		JSONArray jsonArray = new JSONArray();
@@ -92,12 +97,14 @@ public class ApplicationHandler {
 	@GET
 	@Produces("text/html")
 	public String getDeployments(@PathParam("applicationId") String applicationId) {
-		if (applicationId.equals("echo-app")){
-			return "[{\"name\":\"trestles\"}]";
-		} else if (applicationId.equals("ls-app")){
-			return "[{\"name\":\"stampede\"},{\"name\":\"bigred\"}]";
-		} else if (applicationId.equals("us3-app")){
-			return "[{\"name\":\"trestles\"},{\"name\":\"stampede\"}]";
+		if (applicationId.equals("UltrascanAppTrestles")){
+			return "[{\"name\":\"gsissh-trestles\"}]";
+		} else if (applicationId.equals("UltrascanAppStampede")){
+			return "[{\"name\":\"gsissh-stampede\"}]";
+		} else if (applicationId.equals("SimpleEcho2")){
+			return "[{\"name\":\"gsissh-trestles\"}]";
+		} else if (applicationId.equals("SimpleEcho3")){
+			return "[{\"name\":\"stampede-host\"}]";
 		}
 		return "[]";
 //		JSONArray jsonArray = new JSONArray();
