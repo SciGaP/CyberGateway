@@ -138,12 +138,12 @@ public class NewJobHandler {
 
     private ComputationalResourceScheduling getComputationalResourceScheduling(String host) {
         ComputationalResourceScheduling scheduling = null;
-        if (host.equals("stampede")) {
+        if (host.contains("stampede")) {
             scheduling =
                     ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
             scheduling.setResourceHostId("gsissh-stampede");
         }
-        else if(host.equals("trestles")){
+        else if(host.contains("trestles")){
             scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 2, 32, 0, "shared", 0, 0, 0, "uot111");
             scheduling.setResourceHostId("gsissh-trestles");
         }
