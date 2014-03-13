@@ -2,7 +2,7 @@ angular.module("appServices",[]).
 factory("JobService",["$http",function($http) {
 	return {
 		getAllJobs : function() {
-			return $http({method:"GET", url:"app/alljobs", cache:false}).
+			return $http({method:"GET", url:"app/alljobs/all", cache:false}).
 				then(function(response) {
 					return response.data;
 				},function(response,status) {
@@ -11,6 +11,16 @@ factory("JobService",["$http",function($http) {
 					console.log(status);
 				});
 		},
+        getAllProjects : function() {
+            return $http({method:"GET", url:"app/alljobs/projects", cache:false}).
+                then(function(response) {
+                    return response.data;
+                },function(response,status) {
+                    console.log("Error fetching all amber jobs !!");
+                    console.log(response);
+                    console.log(status);
+                });
+        },
 		fetchJob : function(jobId) {
 			return $http({method:"GET", url:"app/job/"+jobId, cache:false}).
 				then(function(response) {

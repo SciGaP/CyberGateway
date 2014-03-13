@@ -19,14 +19,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         $scope.projectSelect($scope.project);
 
-        //making the project active
-        $scope.navClass = function (page) {
-
-            var currentRoute = $location.path().substring(1) || '/';
-            console.log("Current Route  "+currentRoute + " Page :"+page);
-            return page === currentRoute ? 'active' : '';
-        };
-
         var loadJobs = function () {
             console.log("inside the load jobs");
             JobService.getAllJobs().then(function (jobs) {
@@ -132,6 +124,30 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log($scope.job_details);
         $scope.fetchSingleJob(jobID);
         console.log("Job details : " + $scope.job_details);
+
+    }]).
+    controller("ProjectController", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
+
+
+        var loadProjects = function () {
+            console.log("inside the load projects");
+            JobService.getAllProjects().then(function (projects) {
+                $scope.projects = projects;
+                console.log(projects);
+            });
+            console.log("exiting load projects....");
+        };
+
+        loadProjects();
+
+        //making the project active
+        $scope.navClass = function (page) {
+
+            var currentRoute = $location.path().substring(1) || '/';
+            console.log("Current Route  "+currentRoute + " Page :"+page);
+            return page === currentRoute ? 'active' : '';
+        };
+
 
     }]).
     controller("NewJobCtrl", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
