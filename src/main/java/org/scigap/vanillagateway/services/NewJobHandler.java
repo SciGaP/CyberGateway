@@ -36,7 +36,7 @@ public class NewJobHandler {
 //        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
 
         //for stampede
-        Experiment experiment = createExperiment(project, "admin", name, description, "US3EchoStampede", host, null);
+        Experiment experiment = createExperiment(project, "admin", name, description, application, host, null);
         String experimentId = submitJob(experiment);
 
 
@@ -70,36 +70,62 @@ public class NewJobHandler {
         experiment.setDescription(expDescription);
         experiment.setApplicationId(applicationId);
 
-
-        List<DataObjectType> exInputs = new ArrayList<DataObjectType>();
-        DataObjectType input = new DataObjectType();
-        input.setKey("echo_input");
-        //input.setType(DataType.STRING.toString());
-        input.setValue("echo_output=Hello World");
-        exInputs.add(input);
-
+        List<DataObjectType> exInputs = getInputPatameterList(applicationId);
         experiment.setExperimentInputs(exInputs);
 
-        List<DataObjectType> exOut = new ArrayList<DataObjectType>();
-        DataObjectType output = new DataObjectType();
-        output.setKey("echo_output");
-        //output.setType(DataType.STRING.toString());
-        output.setValue("");
-        exOut.add(output);
-
+        List<DataObjectType> exOut = getOutputParameterList(applicationId);
         experiment.setExperimentOutputs(exOut);
 
-/*
-        ComputationalResourceScheduling scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 1, 1, 1,
-                "normal", 0, 0, 1, "sds128");
-        scheduling.setResourceHostId("gsissh-trestles");
-*/
-        //for stampede
         UserConfigurationData userConfigurationData = getUserConfigurationData(host);
         experiment.setUserConfigurationData(userConfigurationData);
 
         return experiment;
     }
+
+    private List<DataObjectType> getOutputParameterList(String appID) {
+        List<DataObjectType> exOut = null;
+        if (appID.contains("App")) {
+            exOut = new ArrayList<DataObjectType>();
+            DataObjectType output = new DataObjectType();
+            output.setKey("output");
+            output.setValue("");
+            DataObjectType output1 = new DataObjectType();
+            output1.setKey("stdout");
+            output1.setValue("");
+            DataObjectType output2 = new DataObjectType();
+            output2.setKey("stderr");
+            output2.setValue("");
+            exOut.add(output);
+            exOut.add(output1);
+            exOut.add(output2);
+        } else {
+            exOut = new ArrayList<DataObjectType>();
+            DataObjectType output = new DataObjectType();
+            output.setKey("echo_output");
+            output.setValue("");
+            exOut.add(output);
+        }
+        return exOut;
+    }
+
+        private List<DataObjectType> getInputPatameterList (String appID){
+            List<DataObjectType> exInputs = null;
+            if (appID.contains("App")) {
+                exInputs = new ArrayList<DataObjectType>();
+                DataObjectType input = new DataObjectType();
+                input.setKey("input");
+                input.setValue("file:///home/airavata/input/hpcinput.tar");
+                exInputs.add(input);
+            } else {
+                exInputs = new ArrayList<DataObjectType>();
+                DataObjectType input = new DataObjectType();
+                input.setKey("echo_input");
+                input.setValue("echo_output=Hello World");
+                exInputs.add(input);
+            }
+
+            return exInputs;
+        }
 
     private UserConfigurationData getUserConfigurationData(String host) {
         ComputationalResourceScheduling scheduling = getComputationalResourceScheduling(host);

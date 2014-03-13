@@ -45,16 +45,16 @@ public class ApplicationHandler {
 //			e.printStackTrace();
 //		}
 		application=new JSONObject();
-		application.put("name", "UltrascanAppTrestles");
+		application.put("name", "US3AppTrestles");
 		jsonArray.add(application);
 		application=new JSONObject();
-		application.put("name", "UltrascanAppStampede");
+		application.put("name", "US3AppStampede");
 		jsonArray.add(application);
 		application=new JSONObject();
-		application.put("name", "SimpleEcho2");
+		application.put("name", "US3EchoTrestles");
 		jsonArray.add(application);
 		application=new JSONObject();
-		application.put("name", "SimpleEcho3");
+		application.put("name", "US3EchoStampede");
 		jsonArray.add(application);
 		return jsonArray.toString();
 	}
@@ -63,13 +63,13 @@ public class ApplicationHandler {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getInputs(@PathParam("applicationId") String applicationId) {
-		if (applicationId.equals("UltrascanAppTrestles")){
+		if (applicationId.equals("US3AppTrestles")){
 			return "[{\"name\":\"input\",\"type\": \"URI\" }]";
-		} else if (applicationId.equals("UltrascanAppStampede")){
+		} else if (applicationId.equals("US3AppStampede")){
 			return "[{\"name\":\"input\",\"type\": \"URI\" }]";
-		} else if (applicationId.equals("SimpleEcho2")){
+		} else if (applicationId.equals("US3EchoTrestles")){
 			return "[{\"name\":\"echo_input\",\"type\": \"String\" }]";
-		} else if (applicationId.equals("SimpleEcho3")){
+		} else if (applicationId.equals("US3EchoStampede")){
 			return "[{\"name\":\"echo_input\",\"type\": \"String\" }]";
 		}
 		return "[]";
@@ -95,16 +95,16 @@ public class ApplicationHandler {
 	
 	@Path("/{applicationId}/deployments")
 	@GET
-	@Produces("text/html")
+	@Produces(MediaType.TEXT_PLAIN)
 	public String getDeployments(@PathParam("applicationId") String applicationId) {
-		if (applicationId.equals("UltrascanAppTrestles")){
-			return "[{\"name\":\"gsissh-trestles\"}]";
-		} else if (applicationId.equals("UltrascanAppStampede")){
-			return "[{\"name\":\"gsissh-stampede\"}]";
-		} else if (applicationId.equals("SimpleEcho2")){
-			return "[{\"name\":\"gsissh-trestles\"}]";
-		} else if (applicationId.equals("SimpleEcho3")){
-			return "[{\"name\":\"stampede-host\"}]";
+		if (applicationId.equals("US3AppTrestles")){
+			return "[{\"name\":\"trestles\"}]";
+		} else if (applicationId.equals("US3AppStampede")){
+			return "[{\"name\":\"stampede\"}]";
+		} else if (applicationId.equals("US3EchoTrestles")){
+			return "[{\"name\":\"trestles\"}]";
+		} else if (applicationId.equals("US3EchoStampede")){
+			return "[{\"name\":\"stampede\"}]";
 		}
 		return "[]";
 //		JSONArray jsonArray = new JSONArray();

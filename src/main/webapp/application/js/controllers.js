@@ -173,7 +173,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 fd.append('application', exp.application);
                 fd.append('project', exp.project);
                 fd.append('deployment', exp.deployment);
-
+                console.log("CREATED EXPERIMENT WITH :"+fd);
                 $http.post('app/newjob', fd, {
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
