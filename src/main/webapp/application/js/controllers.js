@@ -102,6 +102,11 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         };
 
+        $scope.goToCreateJob = function (project) {
+            console.log("GOTO JOB CALLED ...." + project);
+            $location.path('/newJob/'+project+"/");
+        }
+
 
     }]).
     controller("JobController", ["$scope", "$routeParams", "JobService", function ($scope, $routeParams, JobService) {
@@ -155,6 +160,8 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.savedCPUCount = $scope.advCPUcount;
             $scope.savedScheduling = $scope.advScheduling;
         }
+
+
 
         $scope.createJob = function (isValid) {
             // check to make sure the form is completely valid
