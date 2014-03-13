@@ -50,18 +50,18 @@ public class ApplicationHandler {
 		} catch (AiravataAPIInvocationException e) {
 			e.printStackTrace();
 		}
-		application=new JSONObject();
-		application.put("name", "US3AppTrestles");
-		jsonArray.add(application);
-		application=new JSONObject();
-		application.put("name", "US3AppStampede");
-		jsonArray.add(application);
-		application=new JSONObject();
-		application.put("name", "US3EchoTrestles");
-		jsonArray.add(application);
-		application=new JSONObject();
-		application.put("name", "US3EchoStampede");
-		jsonArray.add(application);
+//		application=new JSONObject();
+//		application.put("name", "US3AppTrestles");
+//		jsonArray.add(application);
+//		application=new JSONObject();
+//		application.put("name", "US3AppStampede");
+//		jsonArray.add(application);
+//		application=new JSONObject();
+//		application.put("name", "US3EchoTrestles");
+//		jsonArray.add(application);
+//		application=new JSONObject();
+//		application.put("name", "US3EchoStampede");
+//		jsonArray.add(application);
 		return jsonArray.toString();
 	}
 
