@@ -1,22 +1,16 @@
 package org.scigap.vanillagateway.services;
 
-import org.apache.airavata.client.AiravataAPIFactory;
-import org.apache.airavata.client.api.AiravataAPI;
-import org.apache.airavata.client.api.exception.AiravataAPIInvocationException;
-import org.apache.airavata.commons.gfac.type.ServiceDescription;
-import org.apache.airavata.schemas.gfac.InputParameterType;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.scigap.vanillagateway.airavata.AiravataClient;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import java.io.IOException;
-import java.util.List;
+import org.apache.airavata.client.AiravataAPIFactory;
+import org.apache.airavata.client.api.AiravataAPI;
+import org.apache.airavata.client.api.exception.AiravataAPIInvocationException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * Created by swithana on 3/12/14.
@@ -110,15 +104,13 @@ public class ApplicationHandler {
 //		JSONObject application = null;
 //		try {
 //			AiravataAPI api = getAPI();
-//			ServiceDescription serviceDescription = api.getApplicationManager()
-//					.getServiceDescription(applicationId);
-//			InputParameterType[] inputs = serviceDescription.getType()
-//					.getInputParametersArray();
-//			for (InputParameterType inputParameterType : inputs) {
-//				application = new JSONObject();
-//				application.put("name", inputParameterType.getParameterName());
-//				application.put("type", inputParameterType.getParameterType());
-//				jsonArray.add(application);
+//			Map<String[], ApplicationDescription> allApplicationDescriptions = api.getApplicationManager().getAllApplicationDescriptions();
+//			for (String[] descriptorIds : allApplicationDescriptions.keySet()) {
+//				if (descriptorIds[0].equals(applicationId)){
+//					application = new JSONObject();
+//					application.put("name", descriptorIds[1]);
+//					jsonArray.add(application);
+//				}
 //			}
 //		} catch (AiravataAPIInvocationException e) {
 //			e.printStackTrace();
