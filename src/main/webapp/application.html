@@ -35,7 +35,7 @@
 <!--TODO: app Name should be displayed using the controller variable -->
 
 <div class="row">
-    <div class="span20">
+    <!--div class="span20">
         <ul class="nav nav-list">
             <li class="nav-header">{{appName}} PORTAL</li>
             <li><a href="#">My Experiments</a></li>
@@ -43,6 +43,28 @@
             <li><a href="#">Our Services</a></li>
 
         </ul>
+    </div -->
+
+    <div class="span20" ng-controller="JobListCtrl">
+        <ul class="nav nav-list" ng-repeat="project in projects">
+            <li ng-class="navClass('alljobs/{{project.name}}/')" ><a href='#/alljobs/{{project.name}}'>{{project.name}}</a></li>
+            <!-- li ng-click="onProjectSelect(project.name)">{{project.name}} </li -->
+        </ul>
+
+        <!--table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>Projects
+                </th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr ng-repeat="project in projects">
+                <td ng-click="onProjectSelect(project.name)">{{project.name}}</td>
+            </tr>
+            </tbody>
+        </table -->
     </div>
     <div class="span12">
         <div ng-view></div>

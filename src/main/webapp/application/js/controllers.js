@@ -1,7 +1,31 @@
 angular.module("appControllers", ["appServices", "angularFileUpload"]).
-    controller("JobListCtrl", ["JobService", "$scope", "$location", function (JobService, $scope, $location) {
+    controller("JobListCtrl", ["JobService", "$scope", "$location","$routeParams", function (JobService, $scope, $location,$routeParams) {
         console.log("In JobListCtrl");
 
+        $scope.project = $routeParams.project;
+        console.log($scope.project);
+
+        //filtering
+        $scope.filterText = {};
+
+        $scope.projectSelect = function (project) {
+            $scope.selectedProject = project;
+            $scope.project = (project == "AllExperiments") ? "" : project;
+            $scope.filterText.project = (project == "AllExperiments") ? "" : project;
+
+            console.log("project selected: " + project);
+            console.log("Project filter: " + $scope.project);
+        };
+
+        $scope.projectSelect($scope.project);
+
+        //making the project active
+        $scope.navClass = function (page) {
+
+            var currentRoute = $location.path().substring(1) || '/';
+            console.log("Current Route  "+currentRoute + " Page :"+page);
+            return page === currentRoute ? 'active' : '';
+        };
 
         var loadJobs = function () {
             console.log("inside the load jobs");
@@ -24,8 +48,8 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         //for project showing and filtering
         $scope.selectedProject = "AllExperiments";
         $scope.projects = [
-            {name: "AllExperiments", id: 1},
-            {name: "vanillagateway", id: 2}
+            {name: "AllExperiments"},
+            {name: "vanillagateway"}
 
         ];
         $scope.project = "";

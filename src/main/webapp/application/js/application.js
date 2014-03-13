@@ -4,7 +4,7 @@ application.config(['$routeProvider' ,function($routeProvider) {
     $routeProvider.
         when('/', {controller:'JobListCtrl', templateUrl:'application/jobs.html'}).
         when('/newJob', {controller:'NewJobCtrl', templateUrl:'application/newJob.html'}).
-        when('/job/:jobID/details', {controller:'JobController', templateUrl:'application/jobDetails.html'}).
+        when('/alljobs/:project/', {controller:'JobListCtrl', templateUrl:'application/jobs.html'}).
         otherwise({redirectTo:'/'});
 }]);
 
