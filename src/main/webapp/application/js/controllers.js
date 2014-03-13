@@ -226,6 +226,17 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         };
 
+        //deployment specific
+        $scope.experiment.deployment="Select"
+        $scope.getAllDeployments = function (application) {
+            console.log("Getting application Deployments for: " + application);
+            JobService.getHosts(application).then(function (response) {
+                console.log("application deployments: " + response);
+                $scope.hosts = response;
+            });
+
+        };
+
 
         $scope.getAllApplications();
 
@@ -234,6 +245,13 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.experiment.application = appname;
             $scope.getAllApplicationInputs(appname);
             console.log($scope.experiment.application);
+            $scope.getAllDeployments(appname);
+            $scope.experiment.deployment="Select"
+        };
+
+        $scope.onHostSelect = function (hostname) {
+            $scope.experiment.deployment = hostname;
+            console.log("Deployment: " + hostname);
         };
 
         $scope.experiment.application = "Select Application";

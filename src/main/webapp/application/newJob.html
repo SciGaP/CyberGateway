@@ -20,102 +20,120 @@
                             <a class="dropdown-toggle btn">
                                 {{experiment.application}}
                             </a>
-                            <ul class="dropdown-menu" >
+                            <ul class="dropdown-menu">
                                 <li ng-repeat="app in applications">
                                     <a ng-click="onApplicationSelect(app.name)">{{app.name}}</a>
                                 </li>
                             </ul>
                         </li>
                     </div>
+                </div>
+                <br>
+                <br>
+                <br>
 
-                    <br>
-                    <br>
-                    <br>
+                <div class="row-fluid">
+                    <div class="span3">Experiment Name:</div>
+                    <div class="span9">
+                        <input type="text" ng-minlength="2" ng-model="experiment.name" name="expname" required>
 
-                    <div class="row-fluid">
-                        <div class="span3">Experiment Name:</div>
-                        <div class="span9">
-                            <input type="text" ng-minlength="2" ng-model="experiment.name" name="expname" required>
+                        <p ng-show="newJob.expname.$invalid && !newJob.expname.$error.minlength"
+                           class="help-block, text-error">Experiment name is required.</p>
 
-                            <p ng-show="newJob.expname.$invalid && !newJob.expname.$error.minlength"
-                               class="help-block, text-error">Experiment name is required.</p>
-
-                            <p ng-show="newJob.expname.$error.minlength"
-                               class="help-block, text-error">Experiment name is too short.</p>
-                        </div>
+                        <p ng-show="newJob.expname.$error.minlength"
+                           class="help-block, text-error">Experiment name is too short.</p>
                     </div>
+                </div>
 
-                    <br>
-                    <div class="row-fluid" ng-repeat="input in appInputs">
-                        <div class="span3">{{input.name}}</div>
-                        <div class="span9">
-                            <input type="text" ng-show="input.type == 'String'"/>
-                            <input type="file" ng-show="input.type == 'File'"/>
-                        </div>
+                <br>
+
+                <div class="row-fluid" ng-repeat="input in appInputs">
+                    <div class="span3">{{input.name}}</div>
+                    <div class="span9">
+                        <input type="text" ng-show="input.type == 'String'"/>
+                        <input type="file" ng-show="input.type == 'File'"/>
                     </div>
+                </div>
 
-                    <br>
-                    <!-- configuring advanced options -->
-                    <div>
-                        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Advanced Options >>
-                        </button>
-                        <hr>
-                        <div ng-show="isCollapsed">
-                            <div class="well well-lg">
-                                <div class="row-fluid">
-                                    <div class="span3">CPU count:</div>
-                                    <div class="span9">
-                                        <input type="text" ng-model="advCPUcount">
-                                    </div>
+                <br>
+                <!-- configuring advanced options -->
+                <div>
+                    <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Advanced Options >>
+                    </button>
+                    <hr>
+                    <div ng-show="isCollapsed">
+                        <div class="well well-lg">
+                            <div class="row-fluid">
+                                <div class="span3">Deployment:</div>
+                                <div class="span9">
+                                    <li class="dropdown">
+
+                                        <a class="dropdown-toggle btn">
+                                            {{experiment.deployment}}
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li ng-repeat="host in hosts">
+                                                <a ng-click="onHostSelect(host.name)">{{host.name}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </div>
-                                <div class="row-fluid">
-                                    <div class="span3">Scheduling:</div>
-                                    <div class="span9">
-                                        <input type="text" ng-model="advScheduling">
-                                    </div>
+                            </div>
+                            <br>
+                            <div class="row-fluid">
+                                <div class="span3">CPU count:</div>
+                                <div class="span9">
+                                    <input type="text" ng-model="advCPUcount">
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span3">Scheduling:</div>
+                                <div class="span9">
+                                    <input type="text" ng-model="advScheduling">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span3">Experiment Description: (optional)</div>
-                        <div class="span9">
-                            <textarea type="text" ng-model="experiment.description"></textarea>
+                </div>
+                <div class="row-fluid">
+                    <div class="span3">Experiment Description: (optional)</div>
+                    <div class="span9">
+                        <textarea type="text" ng-model="experiment.description"></textarea>
 
-                        </div>
                     </div>
-                    <br>
+                </div>
+                <br>
 
 
-                    <br>
-                    <!-- input files -->
-                    <!--div class="row-fluid">
-                        <div class="span3">Input files:</div>
-                        <div class="span9">
-                            <input type="file" file-upload multiple/>
-                        </div>
-                    </div-->
-                    <br>
-
-                    <div class="row-fluid" ng-repeat="file in files">
-
-                        <div class="span3">{{file.name}}
-
-                        </div>
-                        <div class="span9">
-                            <a href=""><i class="icon-trash" ng-click="deleteFile($index)"></i></a>
-                        </div>
+                <br>
+                <!-- input files -->
+                <!--div class="row-fluid">
+                    <div class="span3">Input files:</div>
+                    <div class="span9">
+                        <input type="file" file-upload multiple/>
                     </div>
-                    <br>
+                </div-->
+                <br>
 
-                    <div class="row-fluid">
-                        <div class="span3"></div>
-                        <div class="span9">
-                            <!-- SUBMIT BUTTON -->
-                            <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid">Run the Job
-                            </button>
-                        </div>
+                <div class="row-fluid" ng-repeat="file in files">
+
+                    <div class="span3">{{file.name}}
+
                     </div>
+                    <div class="span9">
+                        <a href=""><i class="icon-trash" ng-click="deleteFile($index)"></i></a>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row-fluid">
+                    <div class="span3"></div>
+                    <div class="span9">
+                        <!-- SUBMIT BUTTON -->
+                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid">Run the Job
+                        </button>
+                    </div>
+                </div>
             </form>
 
         </div>

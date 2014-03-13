@@ -71,6 +71,16 @@ factory("JobService",["$http",function($http) {
                     console.log(status);
                 });
         },
+        getHosts : function(application) {
+            return $http({method:"GET", url:"app/applications/"+application+"/deployments/", cache:false}).
+                then(function(response) {
+                    return response.data;
+                }, function(response, status) {
+                    console.log("Error fetching deployments ");
+                    console.log(response);
+                    console.log(status);
+                });
+        },
         uploadFile: function (file,jobID, callback) {
             $http.uploadFile({
                 url: "application/uploadPDB/"+jobID,
