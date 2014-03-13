@@ -32,10 +32,7 @@ public class NewJobHandler {
                             @FormDataParam("description") final String description) {
 
 
-        // for trestles
-//        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
-
-        //for stampede
+          //for stampede
         Experiment experiment = createExperiment(project, "admin", name, description, application, host, null);
         String experimentId = submitJob(experiment);
 
