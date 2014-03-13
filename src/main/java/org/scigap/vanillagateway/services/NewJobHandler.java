@@ -106,13 +106,13 @@ public class NewJobHandler {
         UserConfigurationData userConfigurationData = new UserConfigurationData();
         userConfigurationData.setAiravataAutoSchedule(false);
         userConfigurationData.setOverrideManualScheduledParams(false);
-        //userConfigurationData.setComputationalResourceScheduling(scheduling);
+        userConfigurationData.setComputationalResourceScheduling(scheduling);
         return userConfigurationData;
     }
 
     private ComputationalResourceScheduling getComputationalResourceScheduling(String host) {
         ComputationalResourceScheduling scheduling = null;
-        if (host == null || host.equals("stampede")) {
+        if (host.equals("stampede")) {
             scheduling =
                     ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
             scheduling.setResourceHostId("gsissh-stampede");
@@ -120,6 +120,11 @@ public class NewJobHandler {
         else if(host.equals("trestles")){
             scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 2, 32, 0, "shared", 0, 0, 0, "uot111");
             scheduling.setResourceHostId("gsissh-trestles");
+        }
+        else{
+            scheduling =
+                    ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
+            scheduling.setResourceHostId("gsissh-stampede");
         }
         return scheduling;
     }

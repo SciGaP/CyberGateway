@@ -172,6 +172,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 fd.append('description', exp.description);
                 fd.append('application', exp.application);
                 fd.append('project', exp.project);
+                fd.append('deployment', exp.deployment);
 
                 $http.post('app/newjob', fd, {
                     transformRequest: angular.identity,
@@ -227,7 +228,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         };
 
         //deployment specific
-        $scope.experiment.deployment="Select"
+        $scope.experiment.host="Select"
         $scope.getAllDeployments = function (application) {
             console.log("Getting application Deployments for: " + application);
             JobService.getHosts(application).then(function (response) {
@@ -246,11 +247,13 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.getAllApplicationInputs(appname);
             console.log($scope.experiment.application);
             $scope.getAllDeployments(appname);
-            $scope.experiment.deployment="Select"
+            $scope.experiment.host = "Select";
+            $scope.experiment.deployment = "";
         };
 
         $scope.onHostSelect = function (hostname) {
             $scope.experiment.deployment = hostname;
+            $scope.experiment.host = hostname;
             console.log("Deployment: " + hostname);
         };
 
