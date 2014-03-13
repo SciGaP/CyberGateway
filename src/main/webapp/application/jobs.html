@@ -149,7 +149,7 @@
                 <br>
                 <!-- adding intermediate files -->
                 <div class="row-fluid">
-                    <div class="span4"><strong>Intermediate files</strong></div>
+                    <div class="span4"><strong>Intermediate files / Output files</strong></div>
                     <div ng-repeat="intermid in job_details.intermediateFiles">
                         <li><a>{{intermid}}</a></li>
                     </div>
@@ -157,12 +157,19 @@
                 <br>
                 <!-- adding output files -->
                 <div class="row-fluid">
-                    <div class="span4"><strong>Output files</strong></div>
+                    <div class="span4"><strong>STDOUT</strong></div>
                     <div ng-repeat="output in job_details.outputs">
                         <li><a>{{output}}</a></li>
                     </div>
                 </div>
                 <br>
+
+                <div class="row-fluid">
+                    <div class="span4"><strong>STDERR</strong></div>
+                    <div ng-repeat="output in job_details.outputs">
+                        <li><a>{{output}}</a></li>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="row-fluid">
