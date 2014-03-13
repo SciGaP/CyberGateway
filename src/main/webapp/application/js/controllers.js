@@ -19,6 +19,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         $scope.projectSelect($scope.project);
 
+
         var loadJobs = function () {
             console.log("inside the load jobs");
             JobService.getAllJobs().then(function (jobs) {
@@ -37,14 +38,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 $scope.jobs[jobIndex].detail = job;
             });
         };
-        //for project showing and filtering
-        $scope.selectedProject = "AllExperiments";
-        $scope.projects = [
-            {name: "AllExperiments"},
-            {name: "vanillagateway"}
-
-        ];
-        $scope.project = "";
 
         $scope.status = "AllJobs";
         $scope.statuses = [
@@ -152,8 +145,11 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
     }]).
     controller("NewJobCtrl", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
 
-        $scope.experiment = {};
+        $scope.project = $routeParams.project;
+        console.log($scope.project);
 
+        $scope.experiment = {};
+        $scope.experiment.project = $scope.project;
         //save the advanced options
         $scope.saveAdvanceOptions = function () {
             $scope.savedCPUCount = $scope.advCPUcount;
@@ -175,6 +171,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 fd.append('name', exp.name);
                 fd.append('description', exp.description);
                 fd.append('application', exp.application);
+                fd.append('project', exp.project);
 
                 $http.post('app/newjob', fd, {
                     transformRequest: angular.identity,
@@ -185,7 +182,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                         console.log(data);
                     });
                 alert('Job created Successfully!');
-                $location.path('/');
+                $location.path('/alljobs/AllExperiments/');
             }
         };
 

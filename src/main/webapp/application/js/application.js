@@ -3,7 +3,7 @@ var application = angular.module("application",["user","appServices","appControl
 application.config(['$routeProvider' ,function($routeProvider) {
     $routeProvider.
         when('/', {controller:'JobListCtrl', templateUrl:'application/jobs.html'}).
-        when('/newJob', {controller:'NewJobCtrl', templateUrl:'application/newJob.html'}).
+        when('/newJob/:project/', {controller:'NewJobCtrl', templateUrl:'application/newJob.html'}).
         when('/alljobs/:project/', {controller:'JobListCtrl', templateUrl:'application/jobs.html'}).
         otherwise({redirectTo:'/'});
 }]);

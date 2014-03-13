@@ -27,13 +27,14 @@ public class NewJobHandler {
                             @FormDataParam("file") FormDataContentDisposition fileDetail,
                             @FormDataParam("name") final String name,
                             @FormDataParam("application") final String application,
+                            @FormDataParam("project") final String project,
                             @FormDataParam("description") final String description) {
 
         // for trestles
 //        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
 
         //for stampede
-        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "US3EchoStampede", null);
+        Experiment experiment = createExperiment(project, "admin", name, description, "US3EchoStampede", null);
         String experimentId = submitJob(experiment);
 
 

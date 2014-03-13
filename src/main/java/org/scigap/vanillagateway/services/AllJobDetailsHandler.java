@@ -117,6 +117,7 @@ public class AllJobDetailsHandler {
 
             job.put("id", experiment.getExperimentID());
             job.put("name", experiment.getName());
+            job.put("username", experiment.getUserName());
             //job.put("machine", "Mason");
             //fixme get the real status
 //            ExperimentStatus experimentStatus = experiment.getExperimentStatus();
