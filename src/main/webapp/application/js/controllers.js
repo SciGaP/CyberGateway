@@ -207,24 +207,36 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("In New Job Controller ...");
 
 
-        $scope.experiment.application = "SimpleEcho3";
-
-
+        //Application related data retrieval
+        $scope.applications = {};
         $scope.getAllApplications = function () {
             JobService.getAllApplications().then(function (response) {
                 console.log("applications experiment result: " + response);
                 $scope.applications = response;
+                console.log("..............."+$scope.applications);
+            });
+
+        };
+        $scope.getAllApplicationInputs = function (application) {
+            console.log("Getting application inputs for: " + application);
+            JobService.getAllApplicationInputs(application).then(function (response) {
+                console.log("application inputs: " + response);
+                $scope.appInputs = response;
             });
 
         };
 
+
         $scope.getAllApplications();
+
 
         $scope.onApplicationSelect = function (appname) {
             $scope.experiment.application = appname;
+            $scope.getAllApplicationInputs(appname);
             console.log($scope.experiment.application);
         };
 
+        $scope.experiment.application = "Select Application";
 
     }]).directive('fileUpload',function () {
         console.log("uploading file ...");

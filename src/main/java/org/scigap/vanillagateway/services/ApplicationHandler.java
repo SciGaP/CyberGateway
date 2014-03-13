@@ -64,14 +64,14 @@ public class ApplicationHandler {
 
 	@Path("/{applicationId}/inputs")
 	@GET
-	@Produces("text/html")
+	@Produces(MediaType.TEXT_PLAIN)
 	public String getInputs(@PathParam("applicationId") String applicationId) {
 		if (applicationId.equals("echo-app")){
-			return "[{\"name\":\"echo_input\",\"type\": String }]";
+			return "[{\"name\":\"echo_input\",\"type\": \"String\" }]";
 		} else if (applicationId.equals("ls-app")){
-			return "[{\"name\":\"path\",\"type\": String },{\"name\":\"options\",\"type\": String }]";
+			return "[{\"name\":\"path\",\"type\": \"String\" },{\"name\":\"options\",\"type\": \"String\" }]";
 		} else if (applicationId.equals("us3-app")){
-			return "[{\"name\":\"dataset\",\"type\": File }]";
+			return "[{\"name\":\"dataset\",\"type\": \"File\" }]";
 		}
 		return "[]";
 //		JSONArray jsonArray = new JSONArray();

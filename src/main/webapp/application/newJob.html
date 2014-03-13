@@ -20,7 +20,7 @@
                             <a class="dropdown-toggle btn">
                                 {{experiment.application}}
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" >
                                 <li ng-repeat="app in applications">
                                     <a ng-click="onApplicationSelect(app.name)">{{app.name}}</a>
                                 </li>
@@ -42,6 +42,15 @@
 
                             <p ng-show="newJob.expname.$error.minlength"
                                class="help-block, text-error">Experiment name is too short.</p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row-fluid" ng-repeat="input in appInputs">
+                        <div class="span3">{{input.name}}</div>
+                        <div class="span9">
+                            <input type="text" ng-show="input.type == 'String'"/>
+                            <input type="file" ng-show="input.type == 'File'"/>
                         </div>
                     </div>
 

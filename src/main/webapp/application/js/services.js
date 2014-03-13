@@ -52,11 +52,21 @@ factory("JobService",["$http",function($http) {
                 });
         },
         getAllApplications : function() {
-            return $http({method:"GET", url:"app/applications/", cache:false}).
+            return $http({method:"GET", url:"app/applications/list/", cache:false}).
                 then(function(response) {
                     return response.data;
                 }, function(response, status) {
-                    console.log("Error fetching job detail for Job Id "+jobId);
+                    console.log("Error fetching applications ");
+                    console.log(response);
+                    console.log(status);
+                });
+        },
+        getAllApplicationInputs : function(application) {
+            return $http({method:"GET", url:"app/applications/"+application+"/inputs/", cache:false}).
+                then(function(response) {
+                    return response.data;
+                }, function(response, status) {
+                    console.log("Error fetching application inputs for  "+application);
                     console.log(response);
                     console.log(status);
                 });
