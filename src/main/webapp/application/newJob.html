@@ -3,7 +3,7 @@
         <div class="well-heading"> Job Details</div>
 
         <div>
-            <form name="newJob" ng-submit="createJob(newJob.$valid)" novalidate="novalidate">
+            <form name="newJob" novalidate="novalidate">
                 <div class="row-fluid">
                     <div class="span3">Project:</div>
                     <div class="span9">
@@ -130,7 +130,7 @@
                     <div class="span3"></div>
                     <div class="span9">
                         <!-- SUBMIT BUTTON -->
-                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid">Run the Job
+                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid" ng-click="createJob(newJob.$valid)">Run the Job
                         </button>
                     </div>
                 </div>

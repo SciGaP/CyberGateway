@@ -27,28 +27,30 @@ public class NewJobHandler {
                             @FormDataParam("file") FormDataContentDisposition fileDetail,
                             @FormDataParam("name") final String name,
                             @FormDataParam("application") final String application,
+                            @FormDataParam("deployment") final String host,
                             @FormDataParam("project") final String project,
                             @FormDataParam("description") final String description) {
+
 
         // for trestles
 //        Experiment experiment = createExperiment("vanillagateway", "admin", name, description, "SimpleEcho2", null);
 
         //for stampede
-        Experiment experiment = createExperiment(project, "admin", name, description, "US3EchoStampede", null);
+        Experiment experiment = createExperiment(project, "admin", name, description, "US3EchoStampede", host, null);
         String experimentId = submitJob(experiment);
 
 
         //downloading the files to the server
-       // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
+        // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
         //saveToFile(uploadedInputStream, uploadedFileLocation);
 
 //        return application;
-        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description+
-                "\nExperimentID = "+experimentId;
+        return "Job Created Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description +
+                "\nExperimentID = " + experimentId;
     }
 
-    private String submitJob(Experiment experiment){
-        if(client == null){
+    private String submitJob(Experiment experiment) {
+        if (client == null) {
             client = AiravataClient.getInstance();
         }
         return client.submitJob(experiment);
@@ -56,11 +58,11 @@ public class NewJobHandler {
 
     // FIXME get the inputs and scheduling from the client
     private Experiment createExperiment(String projectID,
-                                             String userName,
-                                             String experimentName,
-                                             String expDescription,
-                                             String applicationId,
-                                             List<DataObjectType> experimentInputList) {
+                                        String userName,
+                                        String experimentName,
+                                        String expDescription,
+                                        String applicationId, String host,
+                                        List<DataObjectType> experimentInputList) {
         Experiment experiment = new Experiment();
         experiment.setProjectID(projectID);
         experiment.setUserName(userName);
@@ -93,26 +95,44 @@ public class NewJobHandler {
         scheduling.setResourceHostId("gsissh-trestles");
 */
         //for stampede
-        ComputationalResourceScheduling scheduling =
-                ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
-        scheduling.setResourceHostId("gsissh-stampede");
-        UserConfigurationData userConfigurationData = new UserConfigurationData();
-        userConfigurationData.setAiravataAutoSchedule(false);
-        userConfigurationData.setOverrideManualScheduledParams(false);
-        userConfigurationData.setComputationalResourceScheduling(scheduling);
+        UserConfigurationData userConfigurationData = getUserConfigurationData(host);
         experiment.setUserConfigurationData(userConfigurationData);
 
         return experiment;
     }
+
+    private UserConfigurationData getUserConfigurationData(String host) {
+        ComputationalResourceScheduling scheduling = getComputationalResourceScheduling(host);
+        UserConfigurationData userConfigurationData = new UserConfigurationData();
+        userConfigurationData.setAiravataAutoSchedule(false);
+        userConfigurationData.setOverrideManualScheduledParams(false);
+        //userConfigurationData.setComputationalResourceScheduling(scheduling);
+        return userConfigurationData;
+    }
+
+    private ComputationalResourceScheduling getComputationalResourceScheduling(String host) {
+        ComputationalResourceScheduling scheduling = null;
+        if (host == null || host.equals("stampede")) {
+            scheduling =
+                    ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
+            scheduling.setResourceHostId("gsissh-stampede");
+        }
+        else if(host.equals("trestles")){
+            scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 2, 32, 0, "shared", 0, 0, 0, "uot111");
+            scheduling.setResourceHostId("gsissh-trestles");
+        }
+        return scheduling;
+    }
+
     private ComputationalResourceScheduling createComputationResourceScheduling(String resourceHostId,
-                                                                                      int cpuCount,
-                                                                                      int nodeCount,
-                                                                                      int numberOfThreads,
-                                                                                      String queueName,
-                                                                                      int wallTimeLimit,
-                                                                                      long jobstartTime,
-                                                                                      int totalPhysicalMemory,
-                                                                                      String projectAccount) {
+                                                                                int cpuCount,
+                                                                                int nodeCount,
+                                                                                int numberOfThreads,
+                                                                                String queueName,
+                                                                                int wallTimeLimit,
+                                                                                long jobstartTime,
+                                                                                int totalPhysicalMemory,
+                                                                                String projectAccount) {
 
         ComputationalResourceScheduling cmRS = new ComputationalResourceScheduling();
         cmRS.setResourceHostId(resourceHostId);
