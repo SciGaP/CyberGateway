@@ -1,4 +1,4 @@
-package org.scigap.vanillagateway.airavata;
+package org.scigap.cybergateway.airavata;
 
 import org.apache.airavata.api.Airavata;
 import org.apache.airavata.api.error.AiravataClientException;
@@ -92,7 +92,7 @@ public class AiravataClientTester {
 
     @Test
     public void testCreateExperiment() {
-        Experiment experiment = createExperiment("vanillagateway", "admin", "tester-sachith", "testing vanilla gateway create experiment"
+        Experiment experiment = createExperiment("cybergateway", "admin", "tester-sachith", "testing vanilla gateway create experiment"
                 , "SimpleEcho3", null);
         String experimentId = submitJob(experiment);
         System.out.println(experimentId);

@@ -1,4 +1,4 @@
-package org.scigap.vanillagateway.services;
+package org.scigap.cybergateway.services;
 
 import java.util.List;
 import java.util.Map;

@@ -1,17 +1,16 @@
-package org.scigap.vanillagateway.services;
+package org.scigap.cybergateway.services;
 
 import org.apache.airavata.model.workspace.experiment.DataObjectType;
 import org.apache.airavata.model.workspace.experiment.Experiment;
 import org.apache.airavata.model.workspace.experiment.JobStatus;
 import org.json.simple.JSONObject;
-import org.scigap.vanillagateway.airavata.AiravataClient;
+import org.scigap.cybergateway.airavata.AiravataClient;
 
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import javax.print.attribute.standard.JobState;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;

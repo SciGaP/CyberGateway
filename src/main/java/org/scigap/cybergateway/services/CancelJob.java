@@ -1,6 +1,6 @@
-package org.scigap.vanillagateway.services;
+package org.scigap.cybergateway.services;
 
-import org.scigap.vanillagateway.airavata.AiravataClient;
+import org.scigap.cybergateway.airavata.AiravataClient;
 
 import java.io.IOException;
 

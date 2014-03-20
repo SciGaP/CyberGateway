@@ -1,21 +1,17 @@
-package org.scigap.vanillagateway.services;
+package org.scigap.cybergateway.services;
 
 import javax.ws.rs.Path;
-import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.apache.airavata.model.workspace.experiment.Experiment;
-import org.apache.airavata.model.workspace.experiment.ExperimentState;
-import org.apache.airavata.model.workspace.experiment.ExperimentStatus;
 import org.codehaus.jettison.json.JSONException;
 import org.json.simple.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
-import org.scigap.vanillagateway.airavata.AiravataClient;
+import org.scigap.cybergateway.airavata.AiravataClient;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 

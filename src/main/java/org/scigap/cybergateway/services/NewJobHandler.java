@@ -1,4 +1,4 @@
-package org.scigap.vanillagateway.services;
+package org.scigap.cybergateway.services;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -7,7 +7,7 @@ import org.apache.airavata.model.workspace.experiment.ComputationalResourceSched
 import org.apache.airavata.model.workspace.experiment.DataObjectType;
 import org.apache.airavata.model.workspace.experiment.Experiment;
 import org.apache.airavata.model.workspace.experiment.UserConfigurationData;
-import org.scigap.vanillagateway.airavata.AiravataClient;
+import org.scigap.cybergateway.airavata.AiravataClient;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
