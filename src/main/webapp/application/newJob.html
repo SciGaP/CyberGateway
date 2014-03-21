@@ -141,10 +141,13 @@
                 <br>
 
                 <div class="row-fluid">
-                    <div class="span3"></div>
-                    <div class="span9">
+                    <div class="span3">
                         <!-- SUBMIT BUTTON -->
-                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid" ng-click="createJob(newJob.$valid)">Launch Experiment
+                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid" ng-click="createJob(newJob.$valid)">Submit Experiment
+                        </button>
+                    </div>
+                    <div class="span9">
+                        <button type="submit" class="btn btn-primary" ng-disabled="newJob.$invalid" ng-click="saveExperiment(newJob.$valid)">Save Experiment
                         </button>
                     </div>
                 </div>

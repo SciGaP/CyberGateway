@@ -175,12 +175,17 @@
                 <div class="row-fluid">
                     <div class="span4">
                         <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="go('/newJob')">Clone
-                            Job
+                            Experiment
                         </button>
                     </div>
                     <div class="span4">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true"
-                                ng-click="cancelExperiment(item.id)">Cancel Job
+                        <button class="btn" data-dismiss="modal" aria-hidden="true" ng-hide="item.status=='CREATED'"
+                                ng-click="cancelExperiment(item.id)">Cancel Experiment
+                        </button>
+                    </div>
+                    <div class="span4">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true" ng-show="item.status=='CREATED'"
+                                ng-click="launchExperiment(item.id)">Launch Experiment
                         </button>
                     </div>
                 </div>

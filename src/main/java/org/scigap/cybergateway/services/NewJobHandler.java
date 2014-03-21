@@ -21,6 +21,7 @@ public class NewJobHandler {
     private AiravataClient client;
 
     @POST
+    @Path("/submit")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public String createJob(@FormDataParam("file") InputStream uploadedInputStream,
@@ -32,7 +33,7 @@ public class NewJobHandler {
                             @FormDataParam("description") final String description) {
 
 
-          //for stampede
+        //for stampede
         Experiment experiment = createExperiment(project, "admin", name, description, application, host, null);
         String experimentId = submitJob(experiment);
 
@@ -46,12 +47,75 @@ public class NewJobHandler {
                 "\nExperimentID = " + experimentId;
     }
 
+    @POST
+    @Path("/save")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String saveExperiment(@FormDataParam("file") InputStream uploadedInputStream,
+                                 @FormDataParam("file") FormDataContentDisposition fileDetail,
+                                 @FormDataParam("name") final String name,
+                                 @FormDataParam("application") final String application,
+                                 @FormDataParam("deployment") final String host,
+                                 @FormDataParam("project") final String project,
+                                 @FormDataParam("description") final String description) {
+
+
+        //for stampede
+        Experiment experiment = createExperiment(project, "admin", name, description, application, host, null);
+        String experimentId = saveExperiment(experiment);
+
+
+        //downloading the files to the server
+        // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
+        //saveToFile(uploadedInputStream, uploadedFileLocation);
+
+//        return application;
+        return "Job saved Successfully" + " \nExperiment Name: " + name + "\nDescription: " + description +
+                "\nExperimentID = " + experimentId;
+    }
+
+    @POST
+    @Path("/launch")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public String launchSavedExperiment(@FormDataParam("expID") final String expID) {
+
+
+        launchExperiment(expID);
+
+
+        //downloading the files to the server
+        // String uploadedFileLocation = "/Users/swithana/temp/" + fileDetail.getFileName();
+        //saveToFile(uploadedInputStream, uploadedFileLocation);
+
+//        return application;
+        return "Experiment launched successfully "+expID;
+    }
+
+    //##################### Thrift client calls #######################
     private String submitJob(Experiment experiment) {
         if (client == null) {
             client = AiravataClient.getInstance();
         }
         return client.submitJob(experiment);
     }
+
+    private String saveExperiment(Experiment experiment) {
+        if (client == null) {
+            client = AiravataClient.getInstance();
+        }
+        return client.saveExperiment(experiment);
+    }
+
+    private void launchExperiment(String experimentId) {
+        if (client == null) {
+            client = AiravataClient.getInstance();
+        }
+        client.launchExperiment(experimentId);
+    }
+
+    //#################################################################
+
 
     // FIXME get the inputs and scheduling from the client
     private Experiment createExperiment(String projectID,
@@ -105,24 +169,24 @@ public class NewJobHandler {
         return exOut;
     }
 
-        private List<DataObjectType> getInputPatameterList (String appID){
-            List<DataObjectType> exInputs = null;
-            if (appID.contains("App")) {
-                exInputs = new ArrayList<DataObjectType>();
-                DataObjectType input = new DataObjectType();
-                input.setKey("input");
-                input.setValue("file:///home/airavata/input/hpcinput.tar");
-                exInputs.add(input);
-            } else {
-                exInputs = new ArrayList<DataObjectType>();
-                DataObjectType input = new DataObjectType();
-                input.setKey("echo_input");
-                input.setValue("echo_output=Hello World");
-                exInputs.add(input);
-            }
-
-            return exInputs;
+    private List<DataObjectType> getInputPatameterList(String appID) {
+        List<DataObjectType> exInputs = null;
+        if (appID.contains("App")) {
+            exInputs = new ArrayList<DataObjectType>();
+            DataObjectType input = new DataObjectType();
+            input.setKey("input");
+            input.setValue("file:///home/airavata/input/hpcinput.tar");
+            exInputs.add(input);
+        } else {
+            exInputs = new ArrayList<DataObjectType>();
+            DataObjectType input = new DataObjectType();
+            input.setKey("echo_input");
+            input.setValue("echo_output=Hello World");
+            exInputs.add(input);
         }
+
+        return exInputs;
+    }
 
     private UserConfigurationData getUserConfigurationData(String host) {
         ComputationalResourceScheduling scheduling = getComputationalResourceScheduling(host);
@@ -139,12 +203,10 @@ public class NewJobHandler {
             scheduling =
                     ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
             scheduling.setResourceHostId("gsissh-stampede");
-        }
-        else if(host.contains("trestles")){
+        } else if (host.contains("trestles")) {
             scheduling = createComputationResourceScheduling("trestles.sdsc.edu", 2, 32, 0, "shared", 0, 0, 0, "uot111");
             scheduling.setResourceHostId("gsissh-trestles");
-        }
-        else{
+        } else {
             scheduling =
                     ExperimentModelUtil.createComputationResourceScheduling("stampede.tacc.xsede.org", 1, 1, 1, "normal", 0, 0, 1, "TG-MCB070039N");
             scheduling.setResourceHostId("gsissh-stampede");

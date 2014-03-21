@@ -1,5 +1,5 @@
 angular.module("appControllers", ["appServices", "angularFileUpload"]).
-    controller("JobListCtrl", ["JobService", "$scope", "$location","$routeParams", function (JobService, $scope, $location,$routeParams) {
+    controller("JobListCtrl", ["JobService", "$scope", "$location", "$routeParams","$http","$location", function (JobService, $scope, $location, $routeParams,$http,$location) {
         console.log("In JobListCtrl");
 
         $scope.project = $routeParams.project;
@@ -102,9 +102,33 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
 
         };
 
+        //launch a saved Experiment
+        $scope.launchExperiment = function (expId) {
+            // check to make sure the form is completely valid
+
+
+            console.log("launching experiment....");
+
+
+            var fd = new FormData();
+            fd.append('expID', expId);
+            console.log("CREATED EXPERIMENT WITH :" + fd);
+            $http.post('app/newjob/launch', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                .success(function (data) {
+                    console.log("Form posted");
+                    console.log(data);
+                });
+            alert('Job launched Successfully!');
+            $location.path('/alljobs/'+$scope.project);
+
+        };
+
         $scope.goToCreateJob = function (project) {
             console.log("GOTO JOB CALLED ...." + project);
-            $location.path('/newJob/'+project+"/");
+            $location.path('/newJob/' + project + "/");
         }
 
 
@@ -124,7 +148,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         console.log("Job details : " + $scope.job_details);
 
     }]).
-    controller("ProjectController", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
+    controller("ProjectController", ["$scope", "$routeParams", "$http", "$location", "JobService", function ($scope, $routeParams, $http, $location, JobService) {
 
 
         var loadProjects = function () {
@@ -142,13 +166,13 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         $scope.navClass = function (page) {
 
             var currentRoute = $location.path().substring(1) || '/';
-            console.log("Current Route  "+currentRoute + " Page :"+page);
+            console.log("Current Route  " + currentRoute + " Page :" + page);
             return page === currentRoute ? 'active' : '';
         };
 
 
     }]).
-    controller("NewJobCtrl", ["$scope", "$routeParams", "$http", "$location","JobService", function ($scope, $routeParams, $http, $location,JobService) {
+    controller("NewJobCtrl", ["$scope", "$routeParams", "$http", "$location", "JobService", function ($scope, $routeParams, $http, $location, JobService) {
 
         $scope.project = $routeParams.project;
         console.log($scope.project);
@@ -160,7 +184,6 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             $scope.savedCPUCount = $scope.advCPUcount;
             $scope.savedScheduling = $scope.advScheduling;
         }
-
 
 
         $scope.createJob = function (isValid) {
@@ -180,8 +203,8 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                 fd.append('application', exp.application);
                 fd.append('project', exp.project);
                 fd.append('deployment', exp.deployment);
-                console.log("CREATED EXPERIMENT WITH :"+fd);
-                $http.post('app/newjob', fd, {
+                console.log("CREATED EXPERIMENT WITH :" + fd);
+                $http.post('app/newjob/submit', fd, {
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 })
@@ -190,6 +213,36 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
                         console.log(data);
                     });
                 alert('Job created Successfully!');
+                $location.path('/alljobs/AllExperiments/');
+            }
+        };
+        $scope.saveExperiment = function (isValid) {
+            // check to make sure the form is completely valid
+            if (isValid) {
+
+                console.log("posting data....");
+                var data = $.param($scope.experiment);
+                var file = $scope.files[0];
+                console.log(data);
+
+                var exp = $scope.experiment;
+                var fd = new FormData();
+                fd.append('file', file);
+                fd.append('name', exp.name);
+                fd.append('description', exp.description);
+                fd.append('application', exp.application);
+                fd.append('project', exp.project);
+                fd.append('deployment', exp.deployment);
+                console.log("CREATED EXPERIMENT WITH :" + fd);
+                $http.post('app/newjob/save', fd, {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                })
+                    .success(function (data) {
+                        console.log("Form posted");
+                        console.log(data);
+                    });
+                alert('Job saved Successfully!');
                 $location.path('/alljobs/AllExperiments/');
             }
         };
@@ -221,7 +274,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
             JobService.getAllApplications().then(function (response) {
                 console.log("applications experiment result: " + response);
                 $scope.applications = response;
-                console.log("..............."+$scope.applications);
+                console.log("..............." + $scope.applications);
             });
 
         };
@@ -235,7 +288,7 @@ angular.module("appControllers", ["appServices", "angularFileUpload"]).
         };
 
         //deployment specific
-        $scope.experiment.host="Select"
+        $scope.experiment.host = "Select"
         $scope.getAllDeployments = function (application) {
             console.log("Getting application Deployments for: " + application);
             JobService.getHosts(application).then(function (response) {
